@@ -1,0 +1,43 @@
+//常用颜色
+$blue-color:#2da2ff;
+$gray-color:#e6e6e6;
+$gray-color-two:#f5f5f5;
+$red-color:#ff0036;
+
+//常用按钮
+@mixin btn-center($btn-width,$btn-height,$btn-px,$btn-radius) {
+  border:0px;
+  height: $btn-height;
+  line-height: $btn-height;
+  width: $btn-width;
+  background: $blue-color;
+  border-radius: $btn-radius;
+  color: #fff;
+  font-size: $btn-px;
+  text-align: center;
+}
+//宽度
+@mixin container {
+  width: 1190px;
+  margin: 0 auto;
+  position: relative;
+  @media screen and (max-width:1180px) {
+    width: 920px;
+  }
+}
+
+//兼容的flex布局
+@mixin flex {
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+//单行超出省略
+@mixin overEill {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+

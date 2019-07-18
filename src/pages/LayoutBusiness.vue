@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div>
         <Header></Header>
         <router-view></router-view>
         <!--尾部开始-->
@@ -9,27 +9,19 @@
 </template>
 
 <script>
-    import Header from "@/components/common/Header"
+    import Header from "@/components/common/HeaderBusiness"
     import Footer from "@/components/common/Footer"
     import RightLayout from "@/components/common/RightLayout"//右侧导航
     export default {
-        name: "home",
+        name: "LayoutBusiness",
         components:{
             Footer,
             Header,
             RightLayout,
         },
-        data(){
-            return {
-
-            }
-        },
-        methods:{
-
-        }
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

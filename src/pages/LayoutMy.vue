@@ -1,0 +1,45 @@
+<template>
+    <div>
+        <Header></Header>
+        <div class="width-container">
+            <LeftNav class="left"></LeftNav>
+            <router-view class="right"></router-view>
+        </div>
+        <!--尾部开始-->
+        <Footer></Footer>
+    </div>
+</template>
+
+<script>
+    import Header from "@/components/common/Header2"
+    import Footer from "@/components/common/Footer"
+    import LeftNav from "@/components/common/LeftLayout"
+
+    export default {
+        name: "LayoutMy",
+        components:{
+            Footer,
+            Header,
+            LeftNav
+        },
+    }
+</script>
+
+<style lang="scss" scoped>
+    .width-container {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+        .right {
+            width: 1040px;
+        }
+    }
+    //媒体查询
+    @media screen and (max-width:1180px) {
+        .width-container {
+            .right {
+                width: 800px;
+            }
+        }
+    }
+</style>

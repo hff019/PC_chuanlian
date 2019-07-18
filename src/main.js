@@ -7,6 +7,8 @@ import router from "./routers";
 import store from "./stores";
 import App from "./App.vue";
 
+import './icons/iconfont.js';  // from http://www.iconfont.cn h5 仓库
+import './styles/thems.scss'
 
 
 Vue.use(ElementUI);

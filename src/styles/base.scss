@@ -1,0 +1,156 @@
+@import "iconfont.css";
+//头部样式
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.header-top {
+  background: $gray-color-two;
+  height: 28px;
+  width: 100%;
+  line-height: 28px;
+  .container {
+    @include container;
+    @include flex;
+    justify-content: space-between;
+    .header-top-a1 {
+      font-size: 12px;
+      color: #999;
+      padding: 0 19px;
+    }
+    .header-top-nav {
+      .el-dropdown {
+        font-size: 12px;
+        color: #999;
+        a {
+          color: #999;
+        }
+      }
+      .el-button {
+        border: 0px;
+        background: none;
+        padding: 0 19px;
+        color: #999;
+      }
+      .header-top-a {
+        color: #c0c0c0;
+      }
+    }
+  }
+}
+.header-middle {
+  height: 125px;
+  @include flex;
+  @include container;
+  justify-content: space-around;
+  align-items: center;
+  &-form {
+    width: 454px;
+    display: flex;
+    height: 34px;
+      input {
+        width: 400px;
+        border: 1px solid $blue-color;
+        height: 100%;
+        padding-left: 10px;
+      }
+    button {
+      width: 50px;
+      height: 100%;
+      background: $blue-color;
+      color: #fff;
+      font-size: 15px;
+      border: 0px;
+    }
+  }
+  .shopcar {
+    border: 1px solid $gray-color;
+    color: $blue-color;
+    font-size: 12px;
+    width: 190px;
+    height: 34px;
+    line-height: 34px;
+    display: inline-block;
+    text-align: center;
+  }
+}
+.header-nav {
+  @include container;
+  @include flex;
+  justify-content: space-between;
+  .el-menu--horizontal>.el-submenu .el-submenu__title {
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 0;
+    color: #fff;
+    background: #333;
+    width: 234px;
+  }
+}
+.big-nav-list {
+    li {
+      display: inline-block;
+      list-style: none;
+      width: 100px;
+      text-align: center;
+      line-height: 44px;
+      text-align: center;
+      font-size: 16px;
+      a {
+        color: #333333;
+        &:hover {
+          color: $blue-color;
+        }
+      }
+      &:last-child {
+        text-align: right;
+      }
+      span {
+        color: #f1f1f1;
+        padding: 0 30px;
+      }
+    }
+
+}
+.width-container {
+  @include container
+}
+.footer-small {
+  @include flex;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  align-items: center;
+  background: #fff;
+  justify-content: center;
+  width: 100%;
+  span {
+    color: #666;
+    font-size: 16px;
+    padding-left: 10px;
+  }
+}
+
+.top {
+  @include container;
+  height: 100px;
+  background: url("../images/logo.png") no-repeat left center;
+  img {
+    margin-top: 40px;
+    float: right;
+  }
+}
+//媒体查询
+@media screen and (max-width:1180px) {
+  .big-nav-list {
+    li {
+      width: 80px;
+      span {
+        padding: 0 10px;
+      }
+    }
+
+  }
+}
