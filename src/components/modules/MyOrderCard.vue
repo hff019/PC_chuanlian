@@ -79,9 +79,9 @@
                             </el-button>
                         </el-popover>
                     </el-col>
-                    <el-col :lg="16" :md="8"><router-link to="" style="padding-left: 10px">查看详情</router-link> </el-col>
-                    <el-col :lg="6" :md="4">
-                        <el-button-group  class="group-btn">
+                    <el-col :lg="16" :md="12"><router-link to="" style="padding-left: 10px">查看详情</router-link> </el-col>
+                    <el-col :lg="6" :md="8">
+                        <el-button-group  class="group-btn" style="float: right">
                             <el-button type="primary" v-if="data.shipping_status != 2" @click="sureOrder(data.id)">确定收货</el-button>
                             <el-button type="primary" v-else @click="delectOrder(data.id)">确定收货</el-button>
                             <el-button type="primary">再来一单</el-button>

@@ -52,7 +52,7 @@
   width: 1190px;
   margin: 0 auto;
   position: relative;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center; }
   @media screen and (max-width: 1180px) {
     .header-middle {

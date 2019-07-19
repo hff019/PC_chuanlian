@@ -44,7 +44,7 @@
   height: 125px;
   @include flex;
   @include container;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   &-form {
     width: 454px;

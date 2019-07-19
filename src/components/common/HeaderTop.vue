@@ -1,7 +1,12 @@
 <template>
     <div class="header-top">
         <div class="container">
-            <div class="lf"><span>郑州</span></div>
+            <div class="lf">
+                <svg class="icon">
+                    <use xlink:href="#icon-pc-home-location"></use>
+                </svg>
+                <span> 郑州</span>
+            </div>
             <div class="rt">
                 <div class="header-top-nav">
                     <el-dropdown>
