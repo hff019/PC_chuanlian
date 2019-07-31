@@ -30,7 +30,7 @@
                         </ul>
                         <div class="address-item-box1">
                             <span  @click="deleteAddressFn(index,item)">删除</span>
-                            <router-link to="">修改</router-link>
+                            <router-link :to="`/address-edit/${item.id}`">修改</router-link>
                         </div>
                         <svg class="icons" v-if="item.checked">
                             <use xlink:href="#icon-positionMeanger-chosed"></use>
@@ -38,18 +38,20 @@
                     </div>
                 </el-col>
             </el-row>
-            <Empty  :message="'您还没有添加收货地址, 请在下方添'" v-else/>
+            <Empty :message="'您还没有添加收货地址, 请在下方添'" v-else/>
         </div>
         <div class="address-box">
-            <p class="title">编辑收货地址</p>
+            <p class="title">新增收货地址</p>
             <addressClxd/>
         </div>
     </div>
 </template>
 
 <script>
-    import addressClxd from "@/components/common/Address"
+    import addressClxd from "./AddAddress"
     import Empty from "@/components/Empty"
+    import {mapState, mapMutations} from 'vuex'
+    import {getAddressList, deleteAddress} from "@/api/address.js"
     export default {
         name: "Address",
         components: {
@@ -79,6 +81,19 @@
         },
 
         methods: {
+            ...mapMutations(['CHOOSE_ADDRESS']),
+            async _initData() {
+                let {data} = await getAddressList()
+                console.log(data)
+                if (data instanceof Array && data.length) {
+                    if (this.choose) {
+                        data.forEach((item, i) => {
+                            data[i].checked = false
+                        })
+                    }
+                    this.addressList = data
+                }
+            },
             //删除地址
             async deleteAddressFn(index, item){
                 this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -87,6 +102,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.addressList.splice(index,1)
+                    deleteAddress(item.id)
                     this.$message({
                         type: 'success',
                         message: '删除成功!'
@@ -109,7 +125,13 @@
                     }
                 })
             }
-        }
+        },
+        created() {
+            if (!!this.$route.query.choose) {
+                this.choose = true
+            }
+            this._initData();
+        },
     }
 </script>
 
@@ -136,6 +158,7 @@
         border:1px solid #e6e6e6;
         border-top: 0px;
         position: relative;
+        margin-bottom: 15px;
         &:hover {
             .sp1 {
                 display: inline-block;

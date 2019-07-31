@@ -7,11 +7,11 @@
             </div>
             <div class="follow-item" v-for="(enItem,enIndex) in collectList" >
                 <div class="follow-item-box1">
-                    <router-link to="">进入厂家</router-link>
+                    <router-link :to="`/factoty-shop/${enItem.id}`">进入厂家</router-link>
                     <span @click="deleteGoodsFn(enIndex,enItem)">取消收藏</span>
                 </div>
                 <router-link to="" class="follow-item-box2">
-                    <img src="../../images/index/img3.jpg" class="img">
+                    <img :src="enItem.entity.img_cover" class="img">
                     <p class="p1">{{enItem.entity.good_name}}</p>
                     <p class="p2">{{enItem.entity.price}}10元/{{enItem.entity.unit}}</p>
                 </router-link>
@@ -28,6 +28,7 @@
 
 <script>
     import TopClxsd from "@/components/common/MyTop"
+    import {getCollectionList, deleteCollection} from "@/api/follow.js"
     export default {
         name: "ProductFollow",
         components:{
@@ -35,51 +36,57 @@
         },
         data(){
             return {
-                collectList:[
-                    {
-                        entity: {
-                            good_name: "维生素",
-                            cover: "",
-                            price: "22",
-                            unit: "件"
-                        }
-                    },
-                    {
-                        entity: {
-                            good_name: "维生素",
-                            cover: "",
-                            price: "22",
-                            unit: "件"
-                        }
-                    },
-                    {
-                        entity: {
-                            good_name: "维生素",
-                            cover: "",
-                            price: "22",
-                            unit: "件"
-                        }
-                    },
-                    {
-                        entity: {
-                            good_name: "维生素",
-                            cover: "",
-                            price: "22",
-                            unit: "件"
-                        }
-                    }
-                ],
+                loading:true,
+                currentPage:1,
+                pagesize:20,
+                collectList:[],
             }
         },
+        created() {
+            var params = {
+                page: this.currentPage,
+                type: 'follow',
+                limit: this.pagesize
+            }
+            this.initData(params)
+        },
         methods:{
+            async initData(params) {
+                getCollectionList(params)
+                .then(({data = []}) => {
+                    this.loading = false
+                    this.collectList = data
+                })
+            },
+            current_change(currentPage){  //改变当前页
+                this.currentPage = currentPage
+                var params = {
+                    page: this.currentPage,
+                    type: 'factory',
+                    limit: this.pagesize
+                }
+                this.initData(params)
+            },
             deleteGoodsFn(enIndex,enItem){
                 this.$alert('确定取消收藏了吗?', {
                     confirmButtonText: '确定',
                     callback: action => {
-                        this.$message({
-                            type: 'info',
-                            message: `action: ${ action }`
-                        });
+
+                        if(action === 'confirm'){
+                            deleteCollection(enItem.entity_id)
+                            this.collectList.splice(1)
+                            this.$message({
+                                type: 'info',
+                                message: `取消成功`
+                            });
+                        }else{
+                            this.$message({
+                                type: 'info',
+                                message: `action: ${ action }`
+                            });
+                        }
+
+
                     }
                 });
             }
@@ -149,9 +156,10 @@
         &-box2 {
             text-align: center;
             img {
-                width: 100%;
+                width: 97%;
                 height: 220px;
                 position: relative;
+                margin: 10px auto;
             }
             .p1 {
                 font-size: 14px;

@@ -1,8 +1,9 @@
 <template>
     <div class="my-container">
         <div class="left">
-            <img src="../../images/default.png" class="img1">
-            <p>张无忌<span>15258969854</span></p>
+            <img src="../../images/default.png" v-if="userInfo.userLogo==''" class="img1">
+            <img :src="userInfo.userLogo" v-else class="img1">
+            <p>{{userInfo.userName}}<span>{{userInfo.userTel | filter_mobile}}</span></p>
         </div>
         <div class="right">
             <div class="title">
@@ -14,21 +15,21 @@
             <el-row>
                 <el-col :span="6">
                     <div class="right-info">
-                        <h3 v-if="is_look">1.20</h3>
+                        <h3 v-if="is_look">{{lianBeiValue}}</h3>
                         <h1 v-else>******</h1>
                         <p>联贝价值</p>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="right-info">
-                        <h3 v-if="is_look">1.20</h3>
+                        <h3 v-if="is_look">{{lianBeiValue}}</h3>
                         <h1 v-else>******</h1>
                         <p>我的联贝</p>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="right-info">
-                        <h3 v-if="is_look">1.20</h3>
+                        <h3 v-if="is_look">{{currentValue}}</h3>
                         <h1 v-else>******</h1>
                         <p>联票余额</p>
                     </div>
@@ -45,13 +46,50 @@
 </template>
 
 <script>
+    import {mapState} from "vuex"
     export default {
         name: "MyTop",
         data(){
             return {
-                is_look:true
+                is_look:true,
+                currentValue:0.00,
+                lianBeiValue:0.00,
             }
         },
+        computed:{
+            ...mapState ({
+                userInfo: state => {
+                    const currentInfo = state.CURRENTUSER
+                    let userLogo
+                    if(currentInfo.avatar!=null){
+                        userLogo = currentInfo.avatar.url
+                    }
+                    return {
+                        userName: currentInfo.display_name || currentInfo.real_name || currentInfo.phone || '丢失信息',
+                        userTel: 　currentInfo.phone || '丢失信息',
+                        userLogo
+                    }
+                }
+            })
+        },
+        created(){
+            this.initData()
+        },
+        methods:{
+            initData(){
+                this.$http.get('lianbei/info')
+                .then(response => {
+                    const { data } = response;
+                    if(data){
+                        this.lianBeiValue = data.value;
+                        this.currentValue = data.currentValue
+                    }
+                }).catch(err => {
+
+                })
+            },
+        }
+
     }
 </script>
 

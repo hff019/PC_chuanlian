@@ -12,7 +12,7 @@
 
 <script>
     import LeftNav from "@/components/common/BusinessLeft"//右侧导航
-    import Header from "@/components/common/HeaderBusiness"
+    import Header from "@/components/common/Header/HeaderBusiness"
     import Footer from "@/components/common/Footer"
     export default {
         name: "LayoutBusinessMy",

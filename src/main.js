@@ -10,10 +10,25 @@ import App from "./App.vue";
 import './icons/iconfont.js';  // from http://www.iconfont.cn h5 仓库
 import './styles/thems.scss'
 
+import * as filters from "./filters.js";//过滤器
+import Ajax from './app.js';
+import mixin from "./mixin.js";
+import lstore from "@/plugins/lstore/index";
+import {socketUrl} from "./api";
+import axios from "axios";
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
-//sync(store,router);
+
+Vue.prototype.$http = axios
+
+Vue.use(lstore);
+for (const k in filters) {
+    Vue.filter(k, filters[k]);
+}
+if(!window.initUrl){
+    window.initUrl = window.location.href.replace(/(\/$)/, "");
+}
 
 
 const app = new Vue({

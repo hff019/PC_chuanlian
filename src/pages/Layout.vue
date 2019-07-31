@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import Header from "@/components/common/Header"
+    import Header from "@/components/common/Header/Header"
     import Footer from "@/components/common/Footer"
     import RightLayout from "@/components/common/RightLayout"//右侧导航
     export default {

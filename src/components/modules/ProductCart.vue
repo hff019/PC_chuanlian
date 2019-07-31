@@ -1,19 +1,20 @@
 <template>
-    <router-link to="/product-detail" class="product-cart-list">
-        <img src="../../images/index/img3.jpg" alt="维生素" class="img">
-        <h3 class="title">维生素</h3>
-        <p class="info">10mg*100片/瓶 100瓶一件</p>
-        <p class="price">10元/瓶</p>
+    <router-link :to="`/product-detail/${factoryId}/${data.id}`" class="product-cart-list">
+        <img :src="data.img_cover" alt="维生素" class="img">
+        <h3 class="title">{{data.good_name}}</h3>
+        <p class="info">{{data.spec}} {{data.tran}}{{data.unit}}/{{data.big_unit}}</p>
+        <p class="price"><span style="color:#ff3b30">{{data.price}}</span><small> 元/{{data.unit}}</small></p>
         <div class="animation-box">
-            <p>毛利润 20% / 销售量 1000件</p>
-            <p>建议零售价 20元/瓶</p>
+            <p>毛利润 3% / 销售量 {{data.sale_num}}件</p>
+            <p>建议零售价 {{data.price}}元/{{data.unit}}</p>
         </div>
     </router-link>
 </template>
 
 <script>
     export default {
-        name: "ProductCart"
+        name: "ProductCart",
+        props:["data","factoryId"]
     }
 </script>
 
@@ -28,6 +29,7 @@
         position: relative;
         overflow: hidden;
         margin-bottom: 15px;
+        margin-right: 10px;
         .img {
             width: 136px;
             height: 136px;
@@ -80,7 +82,7 @@
     @media screen and (max-width:1180px) {
         .product-cart-list {
             width: 175px;
-            margin-right: 10px;
+            margin-right: 7px;
             margin-bottom: 10px;
             height: 232px;
             img {

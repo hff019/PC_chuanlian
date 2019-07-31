@@ -9,10 +9,12 @@
             <span>{{data.shopName}}</span>
         </div>
         <ul>
-            <ClxsdCartsEntry :minGoods="minGoods" :addGoods="addGoods"
-                             :productCheckchange="productCheckchange"
-                             :pid="index" :sid="sid"
-                             :key="index" v-for="(value,index) in data.items" :data="value"/>
+            <clxsd-carts-entry :minGoods="minGoods"
+                               :addGoods="addGoods"
+                               :productCheckchange="productCheckchange"
+                               :pid="index" :sid="sid"
+                               :key="index" v-for="(value,index) in data.items"
+                               :data="value"></clxsd-carts-entry>
         </ul>
         <div class="shop-items-foot">
             <div class="td1">
@@ -65,57 +67,29 @@
 
 <script>
     import ClxsdCartsEntry from "./CartEntry"
-
     export default {
         name: "CartShop",
+        props: ["data", "sid", "productCheckchange", "addGoods", "minGoods"],
         components: {
             ClxsdCartsEntry
-        },
-        props: {
-            data: {
-                type: Object,
-                default: function () {
-                    return {
-                        shopName: "哈尔滨药业",
-                        checked: false,
-                        items: [
-                            {
-                                good_name: "维生素片",
-                                sale_price: 123.90,
-                                checked: true,
-                            },
-                            {
-                                good_name: "维生素",
-                                sale_price: 13.90,
-                                checked: false,
-                            },
-                        ],
-                    }
-                },
-            },
-            sid: {
-                type: Number,
-                default: 1
-            },
-            pid: {
-                type: Number,
-                default: 1
-            },
-            minGoods: {
-                type: Object
-            },
-            addGoods: {
-                type: Object
-            },
-            productCheckchange: {
-                type: Object
-            },
         },
         methods: {
             shopChecked(i) {
                 this.$emit('shopChecked', i)
             }
         },
+        filters: {
+            //进行店铺价钱总计的计算的操作
+            __shopCount(data) {
+                let shopCount = 0;
+                data.items.forEach((product, inp) => {
+                    if(product.checked) {
+                        shopCount += product.sale_price * product.qua;
+                    }
+                })
+                return shopCount;
+            }
+        }
     }
 </script>
 

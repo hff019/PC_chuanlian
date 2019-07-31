@@ -1,6 +1,6 @@
 import LayoutMy from "@/pages/LayoutMy"
 import BusinessOrder from "@/pages/order/BusinessOrder";
-import ProductOrder from "@/pages/order/ProductOrder";
+import FactoryOrder from "@/pages/order/FactoryOrder";
 import BusinessFollow from "@/pages/Follow/BusinessFollow";
 import ProductFollow from "@/pages/Follow/ProductFollow";
 //const ProductFollow = () => import(/* webpackChunkName: "my" */ '@/pages/Follow/ProductFollow.vue');
@@ -15,8 +15,8 @@ export default [
         },
         children:[
             {
-                path:'/product-order',
-                component: ProductOrder,
+                path:'/factory-order',
+                component: FactoryOrder,
                 meta:{
                     title:"产品订单"
                 }

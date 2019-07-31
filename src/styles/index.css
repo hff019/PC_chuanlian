@@ -161,6 +161,51 @@
     margin-top: 40px;
     float: right; }
 
+.step {
+  position: relative;
+  height: 80px;
+  width: 440px;
+  margin: 0 auto;
+  margin-top: 65px;
+  margin-bottom: 35px; }
+  .step .stepnum {
+    display: inline-block;
+    background: url(../images/shop/nextStep@2x.png) no-repeat top right;
+    background-size: 120px 7px;
+    background-position-y: 8px;
+    position: absolute; }
+    .step .stepnum span {
+      display: inline-block;
+      width: 23px;
+      height: 23px;
+      line-height: 23px;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 100%;
+      background: #2da2ff;
+      text-align: center; }
+    .step .stepnum p {
+      font-size: 12px;
+      color: #2da2ff;
+      line-height: 260%; }
+  .step .stepnum:nth-child(1) {
+    width: 200px; }
+    .step .stepnum:nth-child(1) span {
+      margin-left: 52px; }
+    .step .stepnum:nth-child(1) p {
+      padding-left: 35px; }
+  .step .stepnum:nth-child(2) {
+    left: 180px;
+    width: 185px; }
+    .step .stepnum:nth-child(2) span {
+      margin-left: 30px; }
+  .step .stepnum:nth-child(3) {
+    width: 80px;
+    background: none;
+    right: 0px; }
+    .step .stepnum:nth-child(3) span {
+      margin-left: 14px; }
+
 @media screen and (max-width: 1180px) {
   .big-nav-list li {
     width: 80px; }

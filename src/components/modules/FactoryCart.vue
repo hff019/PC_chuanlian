@@ -1,10 +1,13 @@
 <template>
     <div>
-        <router-link to="/factoty-shop" class="factory-cart-list">
-            <img src="../../images/index/logo.png" alt="维生素" class="img">
-            <h3 class="title">上海制药厂</h3>
-            <p class="info">中国上海/配送时间：30天/已售555件</p>
-            <p class="price">4个活动</p>
+        <router-link :to="`/factoty-shop/${data.id}`" class="factory-cart-list">
+            <div class="box1">
+                <img src="../../images/index/logo.png" alt="维生素" class="img" v-if="data.logo==null">
+                <img :src="data.logo" :alt="data.display_name || data.name" class="img" v-else>
+            </div>
+            <h3 class="title">{{data.display_name || data.name}}</h3>
+            <p class="info">{{data.address}}配送时间：30天/已售{{data.sale_num}}件</p>
+            <p class="price">暂时没有活动</p>
         </router-link>
     </div>
 </template>
@@ -12,7 +15,15 @@
 <script>
 
     export default {
-        name: "FactoryCart"
+        name: "FactoryCart",
+        props:{
+            data:{
+                type:Object
+            }
+        },
+        created() {
+            console.log(this.data)
+        }
     }
 </script>
 
@@ -31,16 +42,21 @@
         &:nth-child(5n) {
             margin-right: 0px;
         }
-        .img {
+        .box1 {
             width: 136px;
             height: 136px;
-            display: block;
+            overflow: hidden;
             margin: 32px auto;
-            transition:all .4s;
-            &:hover {
-                transform: scale(1.2);
+            .img {
+                width: 100%;
+                height: 100%;
+                transition:all .4s;
+                &:hover {
+                    transform: scale(1.2);
+                }
             }
         }
+
         .title {
             // @include overEill;
             font-size: 14px;
@@ -68,7 +84,7 @@
             margin-right: 10px;
             margin-bottom: 10px;
             height: 240px;
-            img {
+            .box1 {
                 margin: 10px auto !important;
             }
             .price {

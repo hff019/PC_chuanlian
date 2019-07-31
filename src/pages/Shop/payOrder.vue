@@ -7,7 +7,7 @@
                 </svg>
                 <span>订单提交成功，还差一步就获得产品啦，快去支付吧</span>
             </div>
-            <el-tabs v-model="activeName" type="card">
+            <el-tabs v-model="activeName" type="card" id="tab-card">
                 <el-tab-pane name="first">
                 <span slot="label" class="tab-sp1" name="first">
                     <svg class="icons">
@@ -250,9 +250,6 @@
         }
     }
 
-    .el-tabs__item {
-        height: 52px !important;
-    }
 
     .password-box {
         .right {
@@ -364,5 +361,10 @@
                 }
             }
         }
+    }
+</style>
+<style>
+    #tab-card .el-tabs__item {
+        min-height: 52px !important;
     }
 </style>

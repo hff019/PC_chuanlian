@@ -1,5 +1,19 @@
 <template>
     <div class="width-container">
+        <div class="step">
+            <div class="stepnum">
+                <span>1</span>
+                <p>查看购物车</p>
+            </div>
+            <div class="stepnum">
+                <span>2</span>
+                <p>填写账号订单</p>
+            </div>
+            <div class="stepnum">
+                <span>3</span>
+                <p>成功提交订单</p>
+            </div>
+        </div>
         <div class="order-top">
             <div class="order-title">
                 <span>收货信息</span>
@@ -79,6 +93,20 @@
 </script>
 
 <style lang="scss" scoped>
+    .stepnum:nth-child(3) p {
+        color: rgb(153, 153, 153);
+    }
+    .stepnum:nth-child(1) {
+        background-image: url(../../images/shop/nextStep2@2x.png);
+    }
+    .stepnum:nth-child(3) span {
+        background: #fff;
+        color: rgb(153, 153, 153);
+        border: 1px solid rgb(153, 153, 153);
+        width: 21px;
+        height: 21px;
+        line-height: 21px;
+    }
     .order-top {
         border:1px solid #e6e6e6;
         .order-title {

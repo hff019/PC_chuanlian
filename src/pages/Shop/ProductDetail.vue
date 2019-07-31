@@ -15,7 +15,7 @@
                     </ul>
                 </el-col>
                 <el-col :span="13">
-                    <h3 class="title">维生素</h3>
+                    <h3 class="title">{{}}</h3>
                     <div class="detail-box1">
                         <p class="left">￥<span>258</span>/件</p>
                         <p class="right">采购价<span>200</span>/盒 &nbsp;&nbsp; 零售价<span>200</span>/盒</p>
@@ -52,9 +52,10 @@
 </template>
 
 <script>
-    import Header from "@/components/common/HeaderCompany"
+    import Header from "@/components/common/Header/HeaderCompany"
     import Footer from "@/components/common/Footer"
     import RightLayout from "@/components/common/RightLayout"//右侧导航
+    import { mapState,mapMutations} from 'vuex'
     export default {
         name: "ProductDetail",
         components:{
@@ -68,13 +69,32 @@
                     minHeight: document.documentElement.clientHeight+'px',
                     background: '#fff'
                 },
-                num:1
+                num:1,
+                factoryId:0,
+                id:0,
+                ShopDetail:[]
             }
+        },
+        created(){
+            this.factoryId = parseInt(this.$route.params.shopId);
+            this.id = parseInt(this.$route.params.id);
+            this._initData();
         },
         methods:{
             handleChange(value) {
                 console.log(value);
-            }
+            },
+            async _initData() {
+                let params = {
+                    id:this.id,supplierId:this.factoryId
+                }
+                const {
+                    data
+                } = await this.$http.get(`hippo-shop/factory/entities/detail`,{params})
+
+                this.ShopDetail = data
+                console.log(this.ShopDetail)
+            },
         }
     }
 </script>

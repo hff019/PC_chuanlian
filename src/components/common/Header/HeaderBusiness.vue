@@ -4,10 +4,10 @@
         <div style="background: #fff;">
             <div class="header-middle">
                 <div>
-                    <router-link to="/home"><img src="../../images/logo.png"></router-link>
+                    <router-link to="/home"><img src="../../../images/logo.png"></router-link>
                 </div>
                 <div class="business-logo">
-                    <img src="../../images/index/logo.png" width="64" height="64">
+                    <img src="../../../images/index/logo.png" width="64" height="64">
                     <p>湖北祥林药业</p>
                 </div>
                 <div>

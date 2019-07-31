@@ -4,7 +4,7 @@
         <div style="background: #fff;">
             <div class="header-middle">
                 <div>
-                    <router-link to="/home"><img src="../../images/logo.png"></router-link>
+                    <router-link to="/home"><img src="../../../images/logo.png"></router-link>
                 </div>
                 <div class="header-middle-form">
                     <form>
@@ -22,14 +22,15 @@
         <div class="company-box">
             <div class="width-container">
                 <div class="company-info">
-                    <img src="../../images/index/logo.png" width="90" height="90">
+                    <img src="../../../images/index/logo.png" width="90" height="90" v-if="CompanyInfo.logo == null">
+                    <img :src="CompanyInfo.logo" width="90" height="90" v-else>
                     <div class="right">
-                        <h1 class="title">哈尔滨药业<span>收藏</span></h1>
+                        <h1 class="title">{{CompanyInfo.name}}<span  @click="FollowFactory(CompanyInfo.supplier_id)">{{follow_info}}</span></h1>
                         <div class="company-info-box">
                             <ul>
-                                <li>中国·黑龙江</li>
+                                <li v-if="CompanyInfo.address!=null">{{CompanyInfo.address}}</li>
                                 <li>调配时间35天</li>
-                                <li>已售760件</li>
+                                <li>已售{{CompanyInfo.sale_num}}件</li>
                             </ul>
                             <div>
                                 <el-popover
@@ -54,7 +55,10 @@
                                         </ul>
                                     </div>
                                     <el-button slot="reference" style="border: 0px;background: none;color: #fff;padding-top: 5px">
-                                        优惠活动
+                                        <span>优惠活动 </span>
+                                        <svg class="icon" style="width: 13px">
+                                            <use xlink:href="#icon-activity-down"></use>
+                                        </svg>
                                     </el-button>
                                 </el-popover>
                             </div>
@@ -70,25 +74,90 @@
 
 <script>
     import HeaderTop from "./HeaderTop"
-
+    import {mapState} from 'vuex'
+    import {supplierDetails} from "@/api/supplier"
+    import {getFollowList, deleteFollow, SaveFollow} from "@/api/follow.js"
     export default {
         name: "HeaderCompany",
         components: {
             HeaderTop
         },
+        data(){
+            return{
+                factoryId:0,
+                CompanyInfo:[],
+                follow_status: 0,
+                follow_info: '关注',
+            }
 
+        },
+        created() {
+            this.factoryId = parseInt(this.$route.params.id);
+            this.initData()
+        },
+        methods:{
+            async initData() {
+                //获取商铺信息
+                const {
+                    data
+                } = await supplierDetails(this.factoryId)
+                this.CompanyInfo = data
+                //店铺是否关注信息
+                const follow = await getFollowList()
+                this.follow_list = follow.data
+                //computed follow_status
+                this.follow_list.forEach((item, index) => {
+                    console.log("收藏"+item.supplier_id)
+                    console.log("本店id"+this.factoryId)
+                    if (this.factoryId == item.supplier_id) {
+                        this.follow_status = 1
+                        this.follow_info = "已关注"
+                        return
+                    }
+                })
+            },
+            FollowFactory(id) {
+                const params = {
+                    supplier_id: this.factoryId,
+                }
+                if (this.follow_status == 1) {//followed
+
+                    this.$alert('确定取消关注吗?', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            if(action === 'confirm'){
+                                deleteFollow(this.factoryId)
+                                this.follow_status = 0
+                                this.follow_info = '关注'
+                                this.$message({
+                                    type: 'info',
+                                    message: `取消成功`
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    SaveFollow(params)
+                    this.follow_info = '已关注'
+                }
+                this.follow_status = !this.follow_status
+            }
+        }
     }
 </script>
 
 <style lang="scss" scoped>
     .company-box {
-        background: url("../../images/index/small_top.png") no-repeat center;
+        background: url("../../../images/index/small_top.png") no-repeat center;
         width: 100%;
         height: 150px;
         .company-info {
             padding-top: 25px;
             display: flex;
             color: #fff;
+            img {
+                border-radius: 4px;
+            }
             .right {
                 padding-left: 15px;
                 .title {
@@ -101,6 +170,7 @@
                         border-radius: 3px;
                         margin-left: 8px;
                         font-weight: 100;
+                        cursor: pointer;
                     }
                 }
                 .company-info-box {

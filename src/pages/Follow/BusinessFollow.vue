@@ -63,6 +63,7 @@
 
 <script>
     import TopClxsd from "@/components/common/MyTop"
+    import {getFollowList, deleteFollow} from "@/api/follow.js"
 
     export default {
         name: "BusinessFollow",
@@ -71,6 +72,9 @@
         },
         data(){
         return {
+            loading:true,
+            currentPage:1,
+            pagesize:20,
             collectList:[
                 {
                     supplier:{
@@ -106,19 +110,55 @@
             ],
         }
     },
-    methods:{
-        deleteGoodsFn(enIndex,enItem){
-            this.$alert('确定取消收藏了吗?', {
-                confirmButtonText: '确定',
-                callback: action => {
-                    this.$message({
-                        type: 'info',
-                        message: `action: ${ action }`
-                    });
+        created() {
+            var params = {
+                page: this.currentPage,
+                type: 'follow',
+                limit: this.pagesize
+            }
+            this.initData(params)
+        },
+        methods:{
+            async initData(params) {
+                getFollowList(params)
+                .then(({data = []}) => {
+                    this.loading = false
+                    this.collectList = data
+                })
+            },
+            current_change(currentPage){  //改变当前页
+                this.currentPage = currentPage
+                var params = {
+                    page: this.currentPage,
+                    type: 'follow',
+                    limit: this.pagesize
                 }
-            });
+                this.initData(params)
+            },
+            deleteGoodsFn(id){
+                this.$alert('确定取消收藏了吗?', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+
+                        if(action === 'confirm'){
+                            deleteFollow(id)
+                            this.collectList.splice(1)
+                            this.$message({
+                                type: 'info',
+                                message: `取消成功`
+                            });
+                        }else{
+                            this.$message({
+                                type: 'info',
+                                message: `action: ${ action }`
+                            });
+                        }
+
+
+                    }
+                });
+            }
         }
-    }
     }
 </script>
 

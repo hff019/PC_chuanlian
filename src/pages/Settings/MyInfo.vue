@@ -6,15 +6,15 @@
                 <ul>
                     <li>
                         <span>实名认证：</span>
-                        <small>张无忌</small>
+                        <small>{{userInfo.userName}}</small>
                     </li>
                     <li>
                         <span>身份证号：</span>
-                        <small>410882********8521</small>
+                        <small>{{userInfo.user_identity | filter_idcard}}</small>
                     </li>
                     <li>
                         <span>手机号：</span>
-                        <small>15525896587</small>
+                        <small>{{userInfo.userTel | filter_mobile}}</small>
                         <router-link to=""> 修改 </router-link>
                         <small> 手机号每月只能修改一次</small>
                     </li>
@@ -27,10 +27,19 @@
                 </ul>
             </div>
             <div class="right">
-                <img src="../../images/default.png">
+                <img src="../../images/default.png" v-if="userInfo.userLogo==''">
+                <img :src="userInfo.userLogo" v-else>
             </div>
         </div>
         <p class="title">修改头像</p>
+        <image-uploader ref="uploader"
+                        type="storage"
+                        :value="value"
+                        @input="d"
+                        @update:src="avatar=$event"/>
+        <div class="up" @click="beforeSelectFile">
+            <button>相册选择</button>
+        </div>
         <div class="change-logo">
             <div class="left">
                 <img src="../../images/default.png" width="150" height="150">
@@ -38,15 +47,75 @@
                 <p>点击头像更换照片</p>
             </div>
             <div class="right">
-                <button type="submit">提交修改</button>
+                <button type="submit" @click="onSave">提交修改</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapState } from "vuex";
+    import ImageUploader from "@/components/common/ImageUploader";
     export default {
-        name: "MyInfo"
+        name: "MyInfo",
+        data(){
+            return {
+                value:null,
+                loading:false,
+                avatar:null,
+            }
+        },
+        components:{
+            ImageUploader
+        },
+        computed:{
+            ...mapState({
+                userInfo: state => {
+                    const currentInfo = state.CURRENTUSER
+                    const configInfo = state.CONFIG
+                    let userLogo = ''
+
+                    if(currentInfo.avatar!=null){
+                        userLogo = currentInfo.avatar.url
+                    }
+                    return {
+                        userName: currentInfo.display_name || currentInfo.real_name || currentInfo.phone || '丢失信息',
+                        userTel: 　currentInfo.phone || '丢失信息',
+                        userLogo,
+                        user_identity:currentInfo.user_identity
+                    }
+
+                },
+            })
+        },
+        methods:{
+            beforeSelectFile(){
+                this.$refs.uploader.select()
+            },
+            d(v){
+                this.value = v;
+            },
+            onSave(){
+                const param = {};
+
+                if(this.value){
+                    if (typeof this.avatar === 'string') param.avatar = this.value
+                    this.loading = true;
+                    this.$http
+                    .patch('/user', param, { validateStatus: s => s === 204 })
+                    .then(() => {
+                        this.$store.dispatch("fetchUserInfo");
+                        this.loading = false;
+                    })
+                    .catch(err => err)
+                    .finally(() => {
+                        this.loading = false
+                    })
+                }else{
+
+                }
+            }
+        }
     }
 </script>
 

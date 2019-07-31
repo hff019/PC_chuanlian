@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 import Layout from "@/pages/Layout";
-import Header from "@/components/common/Header"
+import Header from "@/components/common/Header/Header"
 import Right from "@/components/common/RightLayout"
 import Home from "@/pages/Home";
 import Product from "@/pages/Product";

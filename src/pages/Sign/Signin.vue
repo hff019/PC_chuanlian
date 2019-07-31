@@ -23,12 +23,12 @@
                         <div class="total-info">手机号或密码错误</div>
                         <form method="" id="">
                             <div>
-                                <input type="text" placeholder="请输入手机号" id="telNumber" name=""/>
+                                <input type="text" placeholder="请输入手机号" id="telNumber" name="" v-model="account"/>
                                 <img src="images/icon/no2.png" class="pw-icon1 hidden">
                                 <p class="prompt" id="tel-info">请输入电话号码</p>
                             </div>
                             <div>
-                                <input type="password" placeholder="请输入登陆密码" id="pwNumber" name=""/>
+                                <input type="password" placeholder="请输入登陆密码" id="pwNumber" name="" v-model="password"/>
                                 <p class="prompt" id="pw-info">请输入登陆密码</p>
                             </div>
                             <div class="yz-code">
@@ -38,7 +38,7 @@
                             <div class="remeber-pw">
                                 <el-checkbox v-model="checked">记住我</el-checkbox>
                             </div>
-                            <input type="submit" value="登陆" class="pw-submit" />
+                            <button class="pw-submit" @click="signinByAccount">登陆</button>
                         </form>
                         <div class="regiter">
                             <a href="#" title="忘记密码">忘记密码</a>
@@ -68,6 +68,7 @@
 
 <script>
     import Footer from "@/components/common/FooterSmall"
+    import { signinByAccount } from "@/api/user";
     export default {
         name: "Signin",
         components:{
@@ -83,7 +84,42 @@
                 },
                 bodyObject:{
                     maxHeight:(document.documentElement.clientHeight-150)+'px'
+                },
+                account: "",
+                password: "",
+
+            }
+        },
+        methods:{
+            signinByAccount() {
+                if(this.account.length === 0) {
+                    Toast('账户不正确');
+                    //this.err = "账户不正确";
+                    return false;
                 }
+
+                if(this.password.length < 6) {
+                    Toast('密码至少6位数，请输入正确的登陆密码');
+                    this.err = "密码不正确";
+                    return false;
+                }
+
+                this.loading = true;
+
+                signinByAccount({
+                    login: this.account,
+                    password: this.password
+                }).then(state => {
+                    this.loading = false;
+                    console.log("state:"+state)
+                    state &&
+                    this.$nextTick(() => {
+                        console.log(state)
+                        this.$router.push(this.$route.query.redirect || "/home");
+                    });
+                    if (state === false) {
+                    }
+                })
             }
         }
     }

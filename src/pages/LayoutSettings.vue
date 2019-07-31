@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import Header from "@/components/common/Header2"
+    import Header from "@/components/common/Header/Header2"
     import Footer from "@/components/common/Footer"
     import LeftNav from "@/components/common/SettingsLeftLayout"
 

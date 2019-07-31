@@ -14,7 +14,7 @@
                             我的订单<i class="el-icon-arrow-down el-icon--right"></i>
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item><router-link to="/product-order" class="header-top-a">产品订单</router-link></el-dropdown-item>
+                            <el-dropdown-item><router-link to="/business-order" class="header-top-a">产品订单</router-link></el-dropdown-item>
                             <el-dropdown-item><router-link to="" class="header-top-a">订制订单</router-link></el-dropdown-item>
                             <el-dropdown-item><router-link to="" class="header-top-a">联采订单</router-link></el-dropdown-item>
                             <el-dropdown-item><router-link to="" class="header-top-a">我的发布</router-link></el-dropdown-item>

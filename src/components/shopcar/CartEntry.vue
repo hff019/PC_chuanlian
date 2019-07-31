@@ -17,12 +17,12 @@
         <div class="td3">
             <div class="shop-arithmetic">
                 <a class="minus" @click.prevent.stop="minGoods(sid,pid)">-</a>
-                <span class="num">4</span>
+                <span class="num">{{data.num}}</span>
                 <a class="plus" @click.prevent.stop="addGoods(sid,pid)">+</a>
             </div>
         </div>
         <div class="td4">
-            <p class="red-color"><b>￥1000.33</b></p>
+            <p class="red-color"><b>￥{{data.num*data.sale_price}}</b></p>
         </div>
         <div class="td5">
             <p>删除</p>

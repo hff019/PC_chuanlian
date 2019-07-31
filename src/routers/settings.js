@@ -3,6 +3,7 @@ import MyInfo from "@/pages/Settings/MyInfo";
 import AptitudesEdit from "@/pages/Aptitude/AptitudesEdit";
 import AptitudesInfo from "@/pages/Aptitude/Aptitudes";
 import Address from "@/pages/Address/Address";
+import EditAddress from "@/pages/Address/EditAddress";
 import PayPassword from "@/pages/Settings/ChangePayPassword";
 import ForgetP from "@/pages/Settings/ForgetP";
 import RemoberP from "@/pages/Settings/RemoberP";
@@ -32,6 +33,10 @@ export default [
             {
                 path:'/address',
                 component: Address,
+            },
+            {
+                path:'/address-edit/:addressId',
+                component: EditAddress,
             },
             {
                 path:'/change-pay-password',

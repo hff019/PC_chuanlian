@@ -114,7 +114,7 @@
         background: #333;
         right: 0px;
         top:0px;
-        z-index: 99;
+        z-index: 9999;
         padding-top: 15%;
         li {
             list-style: none;

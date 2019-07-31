@@ -36,14 +36,14 @@ export default [
         ]
     },
     {
-        path: "/factoty-shop",
+        path: "/factoty-shop/:id",
         component: FactoryShop,
         meta: {
             title: "购物车",
         },
     },
     {
-        path: "/product-detail",
+        path: "/product-detail/:shopId/:id",
         component: ProductDetail,
         meta: {
             title: "商品详情",

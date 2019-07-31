@@ -11,21 +11,21 @@
                 </div>
                 <p class="order-company-name">{{data.supplier_name}}</p>
                 <div class="order-list">
-                    <li class="order-list-li" v-for="(entity,skey) in data.entities">
+                    <li class="order-list-li" v-for="(item,skey) in data.items">
                         <div class="td1">
                             <router-link to="" class="td1-a">
-                                <img  :src="entity.cover" :alt="entity.name">
-                                <p>{{entity.name}}</p>
+                                <img  :src="item.entity.img_cover">
+                                <p>{{item.entity.good_name}}</p>
                             </router-link>
                         </div>
                         <div class="td2">
-                            <p>{{entity.sale_price}}</p>
+                            <p>{{item.price}}</p>
                         </div>
                         <div class="td3">
-                            <p>{{entity.total_num}}</p>
+                            <p>{{item.num}}</p>
                         </div>
                         <div class="td4">
-                            <p class="red-color"><b>{{entity.total_price}}</b></p>
+                            <p class="red-color"><b>{{item.price*item.num}}</b></p>
                         </div>
                     </li>
                 </div>
@@ -37,45 +37,46 @@
                         <p>{{data.total_num}}</p>
                     </div>
                     <div class="td2">
-                        <p>券后小计：<b>￥{{data.total_price}}</b></p>
+                        <p>券后小计：<b>￥{{data.money_paid}}</b></p>
                     </div>
                 </div>
             </div>
+
             <div class="items-foot">
                 <el-row v-if="data.pay_status == 0">
                     <el-col :lg="2" :md="3">
                         <el-popover
                                 placement="right-start"
-                                :title="data.buyer_info.name+' '+data.buyer_info.tel"
+                                :title="data.consignee+' '+data.tel"
                                 width="200"
                                 trigger="hover"
-                                :content="data.buyer_info.address">
+                                :content="data.province+data.city+data.address">
                             <el-button slot="reference" style="border: 0px;background: #f1f1f1">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-myOrder-receiver"></use>
                                 </svg>
-                                <span> {{data.buyer_info.name}}</span>
+                                <span> {{data.consignee}}</span>
                             </el-button>
                         </el-popover>
                     </el-col>
                     <el-col :lg="12" :md="8"><router-link to="" style="padding-left: 10px">查看详情</router-link> </el-col>
-                    <el-col :lg="3" :md="4"><p class="items-foot-p">已选<span>6</span>件产品</p> </el-col>
-                    <el-col :lg="4" :md="5"><p class="items-foot-p">小计<span>90.00</span>件产品</p> </el-col>
+                    <el-col :lg="3" :md="4"><p class="items-foot-p">已选<span>{{data.total_num}}</span>件产品</p> </el-col>
+                    <el-col :lg="4" :md="5"><p class="items-foot-p">小计<span>{{data.money_paid}}</span>元</p> </el-col>
                     <el-col :lg="3" :md="4"><el-button type="primary" class="btn">去付款</el-button></el-col>
                 </el-row>
                 <el-row v-if="data.pay_status == 1">
                     <el-col :lg="2" :md="3">
                         <el-popover
                                 placement="right-start"
-                                :title="data.buyer_info.name+' '+data.buyer_info.tel"
+                                :title="data.consignee+' '+data.tel"
                                 width="200"
                                 trigger="hover"
-                                :content="data.buyer_info.address">
+                                :content="data.city">
                             <el-button slot="reference" style="border: 0px;background: #f1f1f1">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-myOrder-receiver"></use>
                                 </svg>
-                                <span> {{data.buyer_info.name}}</span>
+                                <span> {{data.consignee}}</span>
                             </el-button>
                         </el-popover>
                     </el-col>
@@ -89,6 +90,7 @@
                     </el-col>
                 </el-row>
             </div>
+
         </div>
     </div>
 
