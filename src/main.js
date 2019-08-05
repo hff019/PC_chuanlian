@@ -11,16 +11,15 @@ import './icons/iconfont.js';  // from http://www.iconfont.cn h5 仓库
 import './styles/thems.scss'
 
 import * as filters from "./filters.js";//过滤器
-import Ajax from './app.js';
+import Ajax from './api/api';
 import mixin from "./mixin.js";
 import lstore from "@/plugins/lstore/index";
 import {socketUrl} from "./api";
-import axios from "axios";
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = axios
+Vue.prototype.$http = Ajax
 
 Vue.use(lstore);
 for (const k in filters) {

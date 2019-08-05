@@ -5,23 +5,26 @@
             <div class="title">
                 <span>商品收藏</span>
             </div>
-            <div class="follow-item" v-for="(enItem,enIndex) in collectList" >
-                <div class="follow-item-box1">
-                    <router-link :to="`/factoty-shop/${enItem.id}`">进入厂家</router-link>
-                    <span @click="deleteGoodsFn(enIndex,enItem)">取消收藏</span>
-                </div>
-                <router-link to="" class="follow-item-box2">
-                    <img :src="enItem.entity.img_cover" class="img">
-                    <p class="p1">{{enItem.entity.good_name}}</p>
-                    <p class="p2">{{enItem.entity.price}}10元/{{enItem.entity.unit}}</p>
-                </router-link>
-                <div class="follow-item-box3">
-                    <svg class="icon">
-                        <use xlink:href="#icon-myEnshrine-carShopping"></use>
-                    </svg>
-                    <span>加入购物车</span>
+            <div v-if="collectList.length>0">
+                <div class="follow-item" v-for="(enItem,enIndex) in collectList" >
+                    <div class="follow-item-box1">
+                        <router-link :to="`/factoty-shop/${enItem.id}`">进入厂家</router-link>
+                        <span @click="deleteGoodsFn(enIndex,enItem)">取消收藏</span>
+                    </div>
+                    <router-link to="" class="follow-item-box2">
+                        <img :src="enItem.entity.img_cover" class="img">
+                        <p class="p1">{{enItem.entity.good_name}}</p>
+                        <p class="p2">{{enItem.entity.price}}10元/{{enItem.entity.unit}}</p>
+                    </router-link>
+                    <div class="follow-item-box3">
+                        <svg class="icon">
+                            <use xlink:href="#icon-myEnshrine-carShopping"></use>
+                        </svg>
+                        <span>加入购物车</span>
+                    </div>
                 </div>
             </div>
+            <Empty v-else/>
         </div>
     </div>
 </template>
@@ -29,10 +32,12 @@
 <script>
     import TopClxsd from "@/components/common/MyTop"
     import {getCollectionList, deleteCollection} from "@/api/follow.js"
+    import Empty from "@/components/Empty"
     export default {
         name: "ProductFollow",
         components:{
             TopClxsd,
+            Empty
         },
         data(){
             return {

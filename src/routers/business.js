@@ -17,7 +17,7 @@ export default [
                 component: BusinessHome
             },
             {
-                path:'/business-product-detail',
+                path:'/business-product-detail/:shopId/:id',
                 component: BusinessProductDetail
             },
             

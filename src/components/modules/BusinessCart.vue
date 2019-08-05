@@ -1,22 +1,23 @@
 <template>
     <div>
-        <router-link to="/business-home" class="business-cart-list">
-            <img src="../../images/index/logo.png" alt="维生素" class="img">
-            <h3 class="title">河南省新乡市某某有限公司</h3>
-            <p class="price">0371-52548789</p>
-        </router-link>
+        <span class="business-cart-list" @click="entryBusinessShop(data)">
+            <img :src="data.logo" alt="维生素" class="img">
+            <h3 class="title">{{data.name}}</h3>
+            <p class="price">{{data.tel}}</p>
+        </span>
     </div>
 </template>
 
 <script>
     export default {
-        name: "BusinessCart"
+        name: "BusinessCart",
+        props:["data","entryBusinessShop"]
     }
 </script>
 
 <style lang="scss" scoped>
     .business-cart-list {
-        width: 226px;
+        width: 223px;
         height: 300px;
         background: #fff;
         display: inline-block;
@@ -26,6 +27,7 @@
         overflow: hidden;
         margin-right: 15px;
         margin-bottom: 15px;
+        cursor: pointer;
         &:nth-child(5n) {
             margin-right: 0px;
         }
@@ -61,7 +63,7 @@
     //媒体查询
     @media screen and (max-width:1180px) {
         .business-cart-list {
-            width: 176px;
+            width: 174px;
             margin-right: 10px;
             margin-bottom: 10px;
             height: 240px;

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册页首页</title>
+		<link rel="stylesheet" href="style/normalize.css" />
+		<link rel="stylesheet" href="style/register.css" />
+	</head>
+	<style>
+		.register-choice {
+			width: 690px;
+			margin: 0 auto;
+			margin-top: 120px;
+			text-align: center;
+		}
+		.register-choice li {
+			display: inline-block;
+			width: 48%;
+			margin-bottom: 40px;
+		}
+		.register-choice li a {
+			display: block;
+			font-size: 18px;
+			line-height: 200%;
+		}
+		.change-img {
+			transition: .3s ease;
+		}
+		.change-img2 {
+			display: none;
+		}
+		.change-img:hover .change-img2 {
+			display: inline-block;
+		}
+		.change-img:hover .change-img1 {
+			display: none;
+		}
+	</style>
+	<body>
+		<div class="top">
+			<div class="header">
+				<a href="#" class="go-login" title="去登陆">已有账号 ，<span>去登陆</span></a>
+			</div>
+		</div>
+		<div class="width">
+			<ul class="register-choice">
+				<li>
+					<a href="register_2.html?user_type=1" title="工业注册" class="change-img" target="_blank">
+						<img src="images/register/industry@2x.png" class="change-img1" width="137" height="137">
+						<img src="images/register/industrySelected@2x.png" class="change-img2" width="137" height="137">
+					</a>
+					<a href="register_2.html?user_type=1" title="工业注册" target="_blank">
+						工业注册
+					</a>
+				</li>
+				<li>
+					<a href="register_2.html?user_type=2" title="商业注册" class="change-img" target="_blank">
+						<img src="images/register/business@2x.png" class="change-img1" width="137" height="137">
+						<img src="images/register/businessSelected@2x.png" class="change-img2" width="137" height="137">
+					</a>
+					<a href="register_2.html?user_type=2" title="商业注册" target="_blank">
+						商业注册
+					</a>
+				</li>
+				<li>
+					<a href="register_2.html?user_type=3" title="连锁店注册" class="change-img" target="_blank">
+						<img src="images/register/chainShop@2x.png" class="change-img1" width="137" height="137">
+						<img src="images/register/chainShopSelected@2x.png" class="change-img2" width="137" height="137">
+					</a>
+					<a href="register_2.html?user_type=3" title="连锁店注册" target="_blank">
+						连锁店注册
+					</a>
+				</li>
+				<li>
+					<a href="register_2.html?user_type=4" title="终端注册" class="change-img" target="_blank">
+						<img src="images/register/tagend@2x.png" class="change-img1" width="137" height="137">
+						<img src="images/register/tagendSelected@2x.png" class="change-img2" width="137" height="137">
+					</a>
+					<a href="register_2.html?user_type=4" title="终端注册" target="_blank">
+						终端注册
+					</a>
+				</li>
+			</ul>
+		</div>
+		<footer>
+			<span>创联工厂 &nbsp;Copyright &copy;创联 版权所有</span>
+		</footer>
+	</body>
+</html>

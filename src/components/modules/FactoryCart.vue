@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link :to="`/factoty-shop/${data.id}`" class="factory-cart-list">
+        <router-link :to="`/factoty-shop/${data.id}`" class="factory-cart-list" target="_blank">
             <div class="box1">
                 <img src="../../images/index/logo.png" alt="维生素" class="img" v-if="data.logo==null">
                 <img :src="data.logo" :alt="data.display_name || data.name" class="img" v-else>

@@ -15,14 +15,14 @@
             </div>
         </div>
         <div v-if="data.shops.length>0">
-            <CartsShopHeader></CartsShopHeader>
+            <CartsShopHeader @shopCheckedAll="shopCheckedAll" :data="data"></CartsShopHeader>
             <CartsShoplist :data="data"
                            :add-goods="addGoods"
                            :min-goods="minGoods"
                            :productCheckchange="productCheckchange"
                            @shopChecked="shopCheck"
             />
-            <CartsShopFooter  @shopCheckedAll="shopCheckedAll" :data="data" :toSubmitDataFnc="submitDataFunc"></CartsShopFooter>
+            <CartsShopFooter  :data="data" :toSubmitDataFnc="submitDataFunc"></CartsShopFooter>
         </div>
         <Empty v-else></Empty>
     </div>
@@ -58,11 +58,16 @@
         created(){
             this.shopId = this.$route.params.shopId ? parseInt(this.$route.params.shopId):0
             if(this.shopId){
-                this.route = `/factory/shop/${this.shopId}`
+                this.route = `/my-shop/${this.shopId}`
             }
         },
         mounted(){
             this.initData()
+        },
+        computed:{
+            ...mapState({
+                cartList: state =>state.shop.CART_LIST
+            }),
         },
         methods: {
             async initData(){

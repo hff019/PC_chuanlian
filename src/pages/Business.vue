@@ -2,7 +2,17 @@
     <div style="padding-top: 20px;min-height: 600px">
         <div class="width-container">
             <div>
-                <BusinessClxd></BusinessClxd>
+                <BusinessClxd v-for="(item,index) in business" :data="item" class="item" :entryBusinessShop = "entryBusinessShop"></BusinessClxd>
+            </div>
+            <div style="text-align: center;padding: 20px 0">
+                <el-pagination
+                        layout="prev, pager, next"
+                        :page-size="pagesize"
+                        @current-change="current_change"
+                        :current-page.sync="currentPage"
+                        :pager-count="5"
+                        :total="20">
+                </el-pagination>
             </div>
         </div>
         <ul class="area-list">
@@ -28,7 +38,8 @@
 <script>
     import BusinessClxd from "@/components/modules/BusinessCart"
     import regionAddress from "@/plugins/json/pca-code.json"
-
+    import { mapState } from "vuex";
+    import { findNearBySuppliers } from '@/api/supplier.js'
 
     export default {
         name: "Business",
@@ -42,12 +53,31 @@
                 areaMore: [],
                 loading: true,
                 currentPage: 1,
-                pagesize:20
+                pagesize:20,
+                business:[]
             }
         },
         methods:{
             async initData(params) {
-
+                const {
+                    data
+                } = await findNearBySuppliers(params)
+                this.business = data.items
+                console.log(this.business)
+            },
+            entryBusinessShop(item) {
+                this.$store.commit('SAVE_CURRENT_BUSINESS_SHOP', item.id)
+                this.$store.commit('SAVE_CURRENT_BUSINESS_SHOP_DATA', item)
+                this.$router.push('/business-home')
+            },
+            current_change(currentPage){  //改变当前页
+                this.currentPage = currentPage
+                var params = {
+                    page: this.currentPage,
+                    type: 'business',
+                    limit: this.pagesize
+                }
+                this.initData(params)
             }
         },
         created() {
@@ -56,7 +86,7 @@
             var params = {
                 page: this.currentPage,
                 type: 'business',
-                limit: this.pagesize
+                limit: this.pagesize,
             }
             this.initData(params)
         },
@@ -121,4 +151,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .item {
+        display: inline-block;
+    }
+
 </style>

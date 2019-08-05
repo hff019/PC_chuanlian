@@ -212,6 +212,22 @@
                 }
             }
         }
-
+    }
+    .shopcar {
+        small {
+            width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            background: #2da2ff;
+            color: #fff;
+            font-size: 10px;
+            display: inline-block;
+            text-align: center;
+            line-height: 20px;
+            transform: scale(.8);
+            top: -6px;
+            position: relative;
+            left: -2px;
+        }
     }
 </style>

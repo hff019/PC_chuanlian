@@ -49,8 +49,8 @@
                         <el-col :span="12">
                             <img src="../../images/banner/banner2.png" width="100%" class="img1">
                         </el-col>
-                        <el-col :span="6"  v-for="(entity,index) in entities" class="border-col">
-                            <productClxsd :key='index' :data="entity"/>
+                        <el-col :span="6"  v-for="(entity,index) in entities"  class="border-col">
+                            <productClxsd :key='index' :data="entity" :businessId="businessId"/>
                         </el-col>
                     </el-row>
                 </el-carousel-item>
@@ -60,7 +60,7 @@
                             <img src="../../images/banner/banner2.png" width="100%" class="img1">
                         </el-col>
                         <el-col :span="6"  v-for="(entity,index) in entities" class="border-col">
-                            <productClxsd :key='index' :data="entity"/>
+                            <productClxsd :key='index' :data="entity" :businessId="businessId"/>
                         </el-col>
                     </el-row>
                 </el-carousel-item>
@@ -94,39 +94,29 @@
 
 <script>
     import productClxsd from "@/components/modules/BusinessProductCard"
+    import { businessEntities } from '@/api/business'
+    import {mapState} from 'vuex'
     export default {
         name: "Home",
         data(){
             return {
                 height:"860px",
                 isFixed:false,
-                items:[
-
-                ],
-                entities:[
-                    {
-                        id:1,
-                        good_name:"维生素",
-                        price:"234",
-                        market_price:"345"
-                    },
-                    {
-                        id:1,
-                        good_name:"维生素",
-                        price:"234",
-                        market_price:"345"
-                    },
-                    {
-                        id:1,
-                        good_name:"维生素",
-                        price:"234",
-                        market_price:"345"
-                    }
-                ]
+                entities:[]
             }
         },
         components:{
             productClxsd
+        },
+        computed: {
+            ...mapState({
+                //用户是否有权限看价格
+                canShow:state => state.CURRENTUSER.shop_supplier,
+                businessData: state => state.shop.CURRENT_BUSINESS_SHOP_DATA,
+            }),
+            businessId(){
+                return this.businessData.id
+            }
         },
         mounted() {
             window.addEventListener('scroll', this.menu)
@@ -153,9 +143,22 @@
                     this.isFixed = false
                 }
             },
+            async initData() {
+                const { data } = await businessEntities(this.businessId)
+                this.entities = data
+            },
+            canOption() {
+                if(!this.canShow) {
+                    this.$Message.error('当前用户还未审核通过');
+                    return false;
+                }
+                return true
+
+            },
         },
         created() {
             this.initScreen()
+            this.initData()
         }
     }
 </script>

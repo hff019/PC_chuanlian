@@ -1,0 +1,219 @@
+.center-block {
+  margin: 0 auto;
+}
+.width {
+  width: 1006px;
+  margin: 0 auto;
+}
+.top {
+  width: 1006px;
+  height: 100px;
+  margin: 0 auto;
+  background: url("../images/public/logo.png") no-repeat left center;
+}
+.top img {
+  margin-top: 40px;
+  float: right;
+}
+.login-bg {
+  height: 650px;
+  width: 100%;
+  background: url("../images/login/bg.jpg") #15499a no-repeat center;
+}
+.login {
+  width: 340px;
+  height: 412px;
+  background: #fff;
+  float: right;
+  margin-top: 100px;
+  padding: 10px;
+}
+.login-top .float-left {
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 30px;
+  line-height: 100%;
+  padding-left: 10px;
+}
+.scan-login {
+  position: relative;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+}
+.scan-login span {
+  display: inline-block;
+  background: url("../images/login/bg_border.png") no-repeat center;
+  width: 125px;
+  height: 30px;
+  color: #df9c1f;
+  font-size: 12px;
+  text-align: center;
+  line-height: 30px;
+}
+.scan-login .scan-login-img {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.pw-form {
+  margin-top: 10px;
+  padding: 10px;
+}
+.pw-form input {
+  display: block;
+  height: 35px;
+  margin-bottom: 20px;
+  padding: 0 16px;
+  width: 285px;
+  border: 1px solid #e6e6e6;
+}
+.pw-form div {
+  position: relative;
+}
+.pw-form div .pw-icon1 {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+  cursor: pointer;
+}
+.pw-form div .prompt {
+  position: absolute;
+  right: 10px;
+  color: #ff0036;
+  font-size: 12px;
+  z-index: 99;
+  top: 0px;
+  line-height: 37px;
+  display: none;
+}
+.pw-form .pw-submit {
+  width: 100%;
+  height: 52px;
+  color: #fff;
+  background: #ff0036;
+  font-size: 20px;
+  border-radius: 2px;
+  margin-top: 20px;
+  border: 0px;
+}
+.pw-form .regiter {
+  margin-top: 20px;
+  font-size: 12px;
+  padding: 0 5px 15px;
+}
+.pw-form .regiter a {
+  color: #666666;
+  line-height: 150%;
+}
+.pw-form .pw-info {
+  color: #ff0036;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+}
+.pw-form .total-info {
+  position: absolute;
+  width: 278px;
+  height: 22px;
+  line-height: 24px;
+  background: #ffebeb;
+  border: 1px solid #ff0036;
+  color: #ff0036;
+  font-size: 12px;
+  padding: 0 10px;
+  margin-top: -15px;
+  background: url("../images/icon/no.png") #ffebeb no-repeat left;
+  padding-left: 28px;
+  background-position: 10px;
+  display: none;
+}
+.pw-form form {
+  margin-top: 10px;
+}
+.pw-form .remeber-pw {
+  padding: 13px 0px 0px;
+}
+.pw-form .remeber-pw input {
+  width: 13px;
+  height: 13px;
+  float: left;
+}
+.yz-code {
+  position: relative;
+  width: 100%;
+  height: 35px;
+}
+.yz-code img {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}
+.scan-login-child .ewm {
+  width: 130px;
+  height: 130px;
+  border: 1px solid #e5e5e5;
+  padding: 17px;
+  margin: 0 auto;
+  margin-top: 45px;
+  position: relative;
+}
+.scan-login-child .ewm .scan-fade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #333;
+  top: 0px;
+  left: 0px;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 24px;
+  opacity: 0.8;
+  display: none;
+}
+.scan-login-child .ewm .scan-fade p {
+  color: #fff;
+  margin-bottom: 20px;
+}
+.scan-login-child .ewm .scan-fade div {
+  width: 80px;
+  height: 30px;
+  background: #ff0036;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  margin: 0 auto;
+}
+.scan-login-child p {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 55px;
+  line-height: 100%;
+  text-align: center;
+}
+.scan-login-child p span {
+  color: #ff0036;
+}
+.scan-login-child a {
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  background: url("../images/icon/go.png") no-repeat right;
+  background-position-x: 330px;
+  text-align: right;
+  font-size: 16px;
+  padding-right: 35px;
+  border-top: 1px solid #e5e5e5;
+  margin: 40px -10px 0 -10px;
+  color: #ff0036;
+}
+footer {
+  margin-top: 70px;
+  text-align: center;
+}
+footer span {
+  color: #666666;
+  font-size: 16px;
+  background: url("../images/login/logo_small.png") no-repeat left;
+  padding-left: 30px;
+}

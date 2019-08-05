@@ -4,32 +4,63 @@
             <span>厂家收藏</span>
             <span @click="closedBusinessBox()">关闭</span>
         </div>
-        <div class="follow-list">
-            <router-link to="">
-                <img src="../../../images/index/img3.jpg" class="img">
-            </router-link>
-            <router-link to="">
-                <p class="title-p">哈尔滨制药有限公司</p>
-            </router-link>
-            <span class="del">删除</span>
+        <div v-if="collectList.length>0">
+            <div class="follow-list"  v-for="(item,index) in collectList">
+                <router-link :to="`/factoty-shop/${item.supplier.id}`">
+                    <img :src="item.supplier.logo" class="img">
+                </router-link>
+                <router-link :to="`/factoty-shop/${item.supplier.id}`">
+                    <p class="title-p">{{item.supplier.name}}</p>
+                </router-link>
+                <span class="del" @click="deleteGoodsFn(item.supplier.id)">删除</span>
+            </div>
         </div>
-        <div class="follow-list">
-            <router-link to="">
-                <img src="../../../images/index/img3.jpg" class="img">
-            </router-link>
-            <router-link to="">
-                <p class="title-p">哈尔滨制药有限公司</p>
-            </router-link>
-            <span class="del" >删除</span>
-        </div>
+        <Empty v-else/>
         <p class="total">已收藏<span>4</span>个厂家</p>
     </div>
 </template>
 
 <script>
+    import {getFollowList, deleteFollow} from "@/api/follow.js"
+    import Empty from "@/components/Empty"
     export default {
         name: "BusinessFollow",
-        props:["closedBusinessBox"]
+        props:["closedBusinessBox"],
+        components:{
+            Empty
+        },
+        data() {
+            return {
+                collectList: [],
+            }
+        },
+        created() {
+            this.initData()
+        },
+        methods:{
+            async initData() {
+                getFollowList()
+                .then(({data = []}) => {
+                    this.collectList = data
+                })
+            },
+            deleteGoodsFn(id) {
+                this.$alert('确定取消收藏了吗?', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        if (action === 'confirm') {
+                            deleteFollow(id)
+                            this.collectList.splice(1)
+                            this.$message({
+                                type: 'info',
+                                message: `取消成功`
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
     }
 </script>
 

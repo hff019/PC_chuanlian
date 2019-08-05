@@ -20,8 +20,8 @@
                     </ul>
                 </div>
                 <div>
-                    <router-link to="">
-                        <span class="shopcar">我的购物车<small>1</small></span>
+                    <router-link to="/my-shop">
+                        <span class="shopcar">我的购物车<small class="small-tag">1</small></span>
                     </router-link>
                 </div>
             </div>
@@ -62,8 +62,7 @@
             }
         }
     }
-    .shopcar {
-        small {
+        .small-tag {
             width: 20px;
             height: 20px;
             border-radius: 20px;
@@ -78,7 +77,6 @@
             position: relative;
             left: -2px;
         }
-    }
     .header-middle-form {
         ul {
             float: left;

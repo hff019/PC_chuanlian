@@ -14,14 +14,22 @@
                             我的订单<i class="el-icon-arrow-down el-icon--right"></i>
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item><router-link to="/business-order" class="header-top-a">产品订单</router-link></el-dropdown-item>
-                            <el-dropdown-item><router-link to="" class="header-top-a">订制订单</router-link></el-dropdown-item>
-                            <el-dropdown-item><router-link to="" class="header-top-a">联采订单</router-link></el-dropdown-item>
-                            <el-dropdown-item><router-link to="" class="header-top-a">我的发布</router-link></el-dropdown-item>
+                            <div v-if="supplier!=null">
+                                <el-dropdown-item><router-link to="/business-order" class="header-top-a">产品订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="" class="header-top-a">订制订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="" class="header-top-a">联采订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="" class="header-top-a">我的发布</router-link></el-dropdown-item>
+                            </div>
+                            <div v-else>
+                                <el-dropdown-item><router-link to="/not-company" class="header-top-a">产品订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="/not-company" class="header-top-a">订制订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="/not-company" class="header-top-a">联采订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="/not-company" class="header-top-a">我的发布</router-link></el-dropdown-item>
+                            </div>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <router-link to="" class="header-top-a1">厂家收藏</router-link>
-                    <router-link to="" class="header-top-a1">产品收藏</router-link>
+                    <router-link to="/business-follow" class="header-top-a1">厂家收藏</router-link>
+                    <router-link to="/product-follow" class="header-top-a1">产品收藏</router-link>
                     <el-dropdown>
                         <el-button>
                             客户服务<i class="el-icon-arrow-down el-icon--right"></i>
@@ -48,8 +56,17 @@
 </template>
 
 <script>
+    import {mapState} from "vuex"
     export default {
-        name: "HeaderTop"
+        name: "HeaderTop",
+        computed:{
+            ...mapState({
+                USER_INFO: state => state.CURRENTUSER
+            }),
+            supplier(){
+                return this.USER_INFO.shop_supplier;
+            },
+        }
     }
 </script>
 

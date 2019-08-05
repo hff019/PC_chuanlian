@@ -5,29 +5,63 @@
             <span @click="closedProductBox()">关闭</span>
         </div>
         <div class="product-container">
-            <div class="product-list">
-                <router-link to="">
-                    <img src="../../../images/index/img3.jpg" class="img">
-                    <p class="title-p">维生素</p>
-                    <p class="price">100元/瓶</p>
-                </router-link>
+            <div v-if="collectList.length>0">
+                <div class="product-list" v-for="(enItem,enIndex) in collectList">
+                    <router-link :to="`/factoty-shop/${enItem.id}`">
+                        <img :src="enItem.entity.img_cover" class="img">
+                        <p class="title-p">{{enItem.entity.good_name}}</p>
+                        <p class="price">{{enItem.entity.price}}10元/{{enItem.entity.unit}}</p>
+                    </router-link>
+                </div>
             </div>
-            <div class="product-list">
-                <router-link to="">
-                    <img src="../../../images/index/img3.jpg" class="img">
-                    <p class="title-p">维生素</p>
-                    <p class="price">100元/瓶</p>
-                </router-link>
-            </div>
+            <Empty v-else></Empty>
         </div>
-        <p class="total">已收藏<span>4</span>个产品</p>
+        <p class="total">已收藏<span>{{collectList.length}}</span>个产品</p>
     </div>
 </template>
 
 <script>
+    import {getCollectionList, deleteCollection} from "@/api/follow.js"
+    import Empty from "@/components/Empty"
+
     export default {
         name: "productFollow",
-        props:["closedProductBox"]
+        props:["closedProductBox"],
+        components:{
+          Empty
+        },
+        data() {
+            return {
+                collectList: [],
+            }
+        },
+        created() {
+            this.initData()
+        },
+        methods:{
+            async initData() {
+                getCollectionList()
+                .then(({data = []}) => {
+                    this.collectList = data
+                })
+            },
+            deleteGoodsFn(id) {
+                this.$alert('确定取消收藏了吗?', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        if (action === 'confirm') {
+                            deleteCollection(id)
+                            this.collectList.splice(1)
+                            this.$message({
+                                type: 'info',
+                                message: `取消成功`
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
     }
 </script>
 

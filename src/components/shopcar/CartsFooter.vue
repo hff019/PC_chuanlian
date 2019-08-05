@@ -1,9 +1,10 @@
 <template>
     <div class="total-title">
         <div>
-            <svg class="icon">
-                <use xlink:href="#iconcheck-0"></use>
-            </svg> <span>全选</span>
+            <svg class="icon" @click="$emit('shopCheckedAll')">
+                <use :xlink:href="`#icon-check-${data.checked ? '1' : '0' }`"></use>
+            </svg>
+            <span>全选</span>
         </div>
         <div>
             单价
@@ -22,7 +23,11 @@
 
 <script>
     export default {
-        name: "CartsFooter"
+        name: "CartsFooter",
+        props:{
+            data:{
+            },
+        },
     }
 </script>
 

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登陆页</title>
+    <link rel="stylesheet" href="style/normalize.css"/>
+    <link rel="stylesheet" href="style/login.css"/>
+</head>
+<body>
+<div class="top">
+    <img src="images/public/sentence.png"/>
+</div>
+<div class="login-bg">
+    <div class="width">
+        <div class="login">
+            <div class="login-top">
+                <div class="float-left">
+                    <p class="login-title">密码登陆</p>
+                </div>
+                <div class="float-right">
+                    <div class="scan-login active">
+                        <span>扫码登陆更安全</span>
+                        <img src="images/login/code_change.png" class="scan-login-img"/>
+                    </div>
+                </div>
+                <div class="clearfloat"></div>
+            </div>
+            <div class="pw-form">
+                <div class="total-info">手机号或密码错误</div>
+                <form method="" id="">
+                    <div>
+                        <input type="text" placeholder="请输入手机号" id="telNumber" name="" oninput="fnSetUserTel();"/>
+                        <img src="images/icon/no2.png" class="pw-icon1 hidden">
+                        <p class="prompt" id="tel-info">请输入电话号码</p>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="请输入登陆密码" id="pwNumber" name="" oninput="fnSetUserPassword();"/>
+                        <p class="prompt" id="pw-info">请输入登陆密码</p>
+                    </div>
+                    <div class="yz-code">
+                        <input type="text" placeholder="请输入验证码" id="codeNumber" name="" oninput="fnSetCode();"/>
+                        <img src="images/login/yzm.jpg" width="90" height="30">
+                    </div>
+                    <div class="remeber-pw">
+                        <input type="checkbox"/><label>记住我</label>
+                    </div>
+                    <div class="pw-submit" onclick="userLogin();">登陆</div>
+                </form>
+                <div class="regiter">
+                    <a href="#" title="忘记密码">忘记密码</a>
+                    <a href="register_1.html" class="float-right" title="立即注册">立即注册</a>
+                    <div class="clearfloat"></div>
+                </div>
+                <p class="pw-info">输入账号时，请注意周围环境</p>
+            </div>
+            <div class="scan-login-child" style="display: none;">
+                <div class="ewm">
+                    <img src="" width="130" height="130">
+                    <div class="scan-fade">
+                        <p>二维码已失效</p>
+                        <div>刷新</div>
+                    </div>
+                </div>
+                <p>打开<span>手机创联工厂 </span> 扫一扫登陆</p>
+                <a href="" title="立即注册">立即注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="register-fade"></div>
+<footer>
+    <span>创联工厂 &nbsp;Copyright &copy;创联 版权所有</span>
+</footer>
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script>
+    var userTelValue, userPasswordValue, userCodeValue;
+
+    function fnSetUserTel() {
+        userTelValue = $("#telNumber").val();
+        if (userTelValue == '') {
+            $("#tel-info").css({display: 'block'});
+        } else {
+            $("#tel-info").css({display: 'none'});
+            $(".pw-icon1").css({display: 'block'});
+            if (userTelValue.length == 11) {
+                $(".pw-icon1").css({display: 'none'});
+            }
+        }
+
+    }
+
+    $(".pw-icon1").on('click', function () {
+        $("#telNumber").val("");
+    })
+
+    function fnSetUserPassword() {
+        userPasswordValue = $("#pwNumber").val();
+        userTelValue = $("#telNumber").val();
+        $(".pw-icon1").css({display: 'none'});
+        if (userTelValue == '') {
+            $("#tel-info").css({display: 'block'});
+        } else if (userTelValue.length == 11) {
+            $(".pw-icon1").css({display: 'none'});
+            $("#pw-info").css({display: 'none'});
+        }
+    }
+
+    function fnSetCode() {
+        userCodeValue = $("#codeNumber").val();
+        userPasswordValue = $("#pwNumber").val();
+        userTelValue = $("#telNumber").val();
+
+        if (userTelValue == '') {
+            $("#tel-info").css({display: 'block'});
+        }
+        if (userPasswordValue == '') {
+            console.log(userCodeValue);
+            $("#pw-info").css({display: 'block'});
+        }
+    }
+
+    function userLogin() {
+        if (!userTelValue) {
+            $(".prompt").css({display: 'block'});
+            return;
+        }
+        if (!userPasswordValue) {
+            $(".prompt").css({display: 'block'});
+            return;
+        }
+        var data = {
+            login: userTelValue,
+            password: userPasswordValue,
+            code: userCodeValue
+        };
+        $.ajax({
+            type: "post",
+            url: "http://www.clxsd.cn/api/v3/auth/login",
+            async: true,
+            data: data,
+            success(data) {
+                console.log("登陆成功")
+                alert("登陆成功")
+            },
+            error(options) {
+                alert("登陆失败请检查账号或密码是否正确")
+                return undefined;
+            }
+        });
+    }
+
+    //切换
+    $(".scan-login").on('click', function () {
+        if ($(".scan-login").hasClass("active")) {
+            $(this).removeClass("active");
+            $(".scan-login-child").css({display: 'block'});
+            $(".pw-form").css({display: 'none'});
+            $(this).children("span").html("点击密码登陆");
+            $(".login-title").html("扫码登陆");
+            $(this).children("img").attr("src", "images/login/pc_change.png");
+        } else {
+            $(this).addClass("active");
+            $(".scan-login-child").css({display: 'none'});
+            $(".pw-form").css({display: 'block'});
+            $(this).children("span").html("扫码登陆更安全");
+            $(".login-title").html("密码登陆");
+            $(this).children("img").attr("src", "images/login/code_change.png");
+        }
+    })
+</script>
+</body>
+</html>

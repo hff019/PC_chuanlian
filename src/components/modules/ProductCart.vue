@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="`/product-detail/${factoryId}/${data.id}`" class="product-cart-list">
+    <router-link :to="`/product-detail/${factoryId}/${data.id}`" class="product-cart-list" target="_blank">
         <img :src="data.img_cover" alt="维生素" class="img">
         <h3 class="title">{{data.good_name}}</h3>
         <p class="info">{{data.spec}} {{data.tran}}{{data.unit}}/{{data.big_unit}}</p>

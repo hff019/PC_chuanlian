@@ -1,6 +1,6 @@
 <template>
-    <router-link to="/business-product-detail" class="product-item">
-        <img src="../../images/index/img3.jpg">
+    <router-link :to="`/business-product-detail/${businessId}/${data.id}`" class="product-item"  target="_blank">
+        <img :src="data.img_cover">
         <p class="title">{{data.good_name}}</p>
         <p class="info"><span>￥{{data.price}}</span><span>￥{{data.market_price}}</span></p>
     </router-link>
@@ -9,7 +9,7 @@
 <script>
     export default {
         name: "BusinessProductCard",
-        props:[ "data"]
+        props:[ "data","businessId"]
     }
 </script>
 

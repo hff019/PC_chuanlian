@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册页首页</title>
+		<link rel="stylesheet" href="style/normalize.css" />
+		<link rel="stylesheet" href="style/register.css" />
+	</head>
+	<style>
+		.stepnum:nth-child(3) p {
+			color: rgb(153, 153, 153);
+		}
+		.stepnum:nth-child(1) {
+			background-image: url(images/register/nextStep2@2x.png);
+		}
+		.stepnum:nth-child(3) span {
+			background: #fff;
+			color: rgb(153, 153, 153);
+			border: 1px solid rgb(153, 153, 153);
+			width: 21px;
+			height: 21px;
+			line-height: 21px;
+		}
+		.register-from>div>label {
+			width: 120px;	
+		}
+		.register-from > div .register-inp1 {
+			width: 200px;
+		}
+	</style>
+
+	<body>
+		<div class="top">
+			<div class="header">
+				<a href="#" class="go-login" title="去登陆">已有账号 ，<span>去登陆</span></a>
+			</div>
+		</div>
+		<div class="width">
+			<div class="step">
+				<div class="stepnum">
+					<span>1</span>
+					<p>验证手机号，填写密码</p>
+				</div>
+				<div class="stepnum">
+					<span>2</span>
+					<p>填写账号信息</p>
+				</div>
+				<div class="stepnum">
+					<span>3</span>
+					<p>注册成功</p>
+				</div>
+			</div>
+		</div>
+		<div class="width">
+			<form method="" id="" class="register-from">
+				<div>
+					<label>真 实 姓 名</label>
+					<input type="text" id='realName' class="register-inp1" placeholder="请输入姓名" />
+					<p id="name-info" class="register-info">名字不能为空</p>
+				</div>
+				<div>
+					<label>身 份 证 号</label>
+					<input type="text" id='userid' class="register-inp1" placeholder="请输入身份证号" />
+					<p id="userid-info" class="register-info">身份证不能为空</p>
+				</div>
+				<div>
+					<label>推荐人姓名</label>
+					<input type="text" id='yao_name'  class="register-inp1" placeholder="请输入推荐人姓名" />
+					<p id="yao-name-info" class="register-info">推荐人不能为空</p>
+				</div>
+				<div>
+					<label>推荐人手机号</label>
+					<input type="tel" id='yao_name_mobile' class="register-inp1" placeholder="请输入推荐人手机号" />
+					<p id="yao-tel-info" class="register-info">请填写正确的推荐人手机号</p>
+				</div>
+				<button type="submit" class="register-sub"  onclick="fnRegisterNext();">下一步</button>
+			</form>
+		</div>
+		<footer>
+			<span>创联工厂 &nbsp;Copyright &copy;创联 版权所有</span>
+		</footer>
+		
+		</div>
+		<script type="text/javascript" src="js/zepto.min.js" ></script>
+		<script>
+            $(function () {
+                console.log(document.cookie)
+            });
+			var mobileInputValue;
+            var codeInputValue;
+            var passwordInputValue;
+            var confirmPasswordInputValue;
+			function fnRegisterNext(){
+				realNameInputValue = $("#realName").val();
+                useridInputValue = $("#userid").val();
+                yaonameInputValue = $("#yao_name").val();
+                yaoNameMobileValue = $("#yao_name_mobile").val();
+                if (!realNameInputValue) {
+                    $("#name-info").css({display:'block'});
+                    return;
+                } else if (!useridInputValue) {
+                    $("#userid-info").css({display:'block'});
+                    return;
+                } else if (useridInputValue.length < 18) {
+                    $("#userid-info").css({display:'block'}).text("身份证格式不正确");
+                    return;
+                } else {
+                	$.ajax('users', 'post', data, function(ret, err) {
+                        if (err) {
+                            alert(err.body.error);
+                            return;
+                        } else if (ret) {
+                            //跳转到成功页
+                        };
+
+                    }, false, true);
+                }
+			}
+		</script>
+	</body>
+
+</html>

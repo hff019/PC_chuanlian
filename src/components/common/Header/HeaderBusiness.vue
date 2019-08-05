@@ -7,8 +7,8 @@
                     <router-link to="/home"><img src="../../../images/logo.png"></router-link>
                 </div>
                 <div class="business-logo">
-                    <img src="../../../images/index/logo.png" width="64" height="64">
-                    <p>湖北祥林药业</p>
+                    <img :src="logo" width="64" height="64">
+                    <p>{{title}}</p>
                 </div>
                 <div>
                     <form class="form">
@@ -25,10 +25,22 @@
 
 <script>
     import HeaderTop from "./HeaderTop"
+    import {mapState} from 'vuex';
     export default {
         name: "HeaderBusiness",
         components: {
             HeaderTop
+        },
+        computed: {
+            ...mapState({
+                businessData: state => state.shop.CURRENT_BUSINESS_SHOP_DATA,
+            }),
+            title() {
+                return this.businessData.display_name || this.businessData.name
+            },
+            logo() {
+                return this.businessData.logo
+            },
         },
     }
 </script>

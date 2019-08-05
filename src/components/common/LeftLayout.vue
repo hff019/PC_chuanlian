@@ -2,7 +2,9 @@
     <div>
         <ul class="list">
             <li><b>我的订单</b> </li>
-            <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)"><router-link to="/business-order">产品订单</router-link> </li>
+            <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
+                <span  @click="authToRouter('/business-order')">产品订单</span>
+            </li>
             <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)"><router-link to="/factory-order">工业订单</router-link> </li>
             <li><router-link to="">集采订单</router-link> </li>
             <li><router-link to="">发布订单</router-link> </li>
@@ -29,6 +31,18 @@
         methods:{
             addClass:function(index){
                 this.current=index;
+            },
+            authToRouter(router){
+                console.log(11)
+                const userInfo = this.$store.state.CURRENTUSER;
+                if(userInfo.shop_supplier){
+                    this.$router.push(router);
+                }else{
+                    this.$message({
+                        message: '当前用户未认证',
+                        type: 'warning'
+                    });
+                }
             }
         },
         created() {
@@ -56,11 +70,12 @@
                 margin-bottom: 16px;
                 display: block;
             }
-            a {
+            a ,span{
                 color: #333;
                 font-size: 12px;
                 margin-bottom: 14px;
                 display: block;
+                cursor: pointer;
                 &:hover {
                     color: #2da2ff;
                 }

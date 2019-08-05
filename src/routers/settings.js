@@ -2,6 +2,7 @@ import LayoutSettings from "@/pages/LayoutSettings"
 import MyInfo from "@/pages/Settings/MyInfo";
 import AptitudesEdit from "@/pages/Aptitude/AptitudesEdit";
 import AptitudesInfo from "@/pages/Aptitude/Aptitudes";
+import NotAptitudes from "@/pages/Aptitude/NotAptitudes";
 import Address from "@/pages/Address/Address";
 import EditAddress from "@/pages/Address/EditAddress";
 import PayPassword from "@/pages/Settings/ChangePayPassword";
@@ -25,6 +26,10 @@ export default [
             {
                 path:'/company-info-edit',
                 component: AptitudesEdit,
+            },
+            {
+                path:'/not-company',
+                component: NotAptitudes,
             },
             {
                 path:'/company-info-detail',

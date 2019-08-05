@@ -49,7 +49,10 @@ export default {
             if(userInfo.shop_supplier){
                 this.$router.push(router);
             }else{
-                this.$toast("未认证用户，没有权限操作！");
+                this.$message({
+                    message: '当前用户未认证',
+                    type: 'warning'
+                });
             }
         }
     }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册页首页</title>
+		<link rel="stylesheet" href="style/normalize.css" />
+		<link rel="stylesheet" href="style/register.css" />
+	</head>
+	<style>
+		.stepnum:nth-child(1),.stepnum:nth-child(2) {
+			background-image: url(images/register/nextStep2@2x.png);
+		}
+		.text-center {text-align: center;}
+		.register-success-title {
+			background: url(images/register/success@2x.png) no-repeat left;
+			padding-left: 42px;
+			font-size: 28px;
+			display: inline-block;
+			margin-bottom: 20px;
+		}
+		.register-success-title2 {
+			font-size: 16px;
+			color: rgb(115,115,115);
+		}
+		.register-success-title2 a {
+			color: #D50000;
+			padding-left: 5px;
+			background: url(images/register/enter@2x.png) no-repeat right;
+			padding-right: 15px;
+		}
+		.register-success-ul {
+			text-align: center;
+			margin-top: 32px;
+			margin-bottom: 70px;
+		}
+		.register-success-ul li {
+			display: inline-block;
+			width: 235px;
+			font-size: 14px;
+			color: rgb(51,51,51);
+			line-height: 150%;
+		}
+		.register-sub {
+			margin: 0 auto;
+		}
+	</style>
+	<body>
+		<div class="top">
+			<div class="header">
+				<a href="#" class="go-login" title="去登陆">已有账号 ，<span>去登陆</span></a>
+			</div>
+		</div>
+		<div class="width">
+			<div class="step">
+				<div class="stepnum">
+					<span>1</span>
+					<p>验证手机号，填写密码</p>
+				</div>
+				<div class="stepnum">
+					<span>2</span>
+					<p>填写账号信息</p>
+				</div>
+				<div class="stepnum">
+					<span>3</span>
+					<p>注册成功</p>
+				</div>
+			</div>
+		</div>
+		<div class="width text-center">
+			<h3 class="register-success-title">恭喜您，注册成功！</h3>
+			<p class="register-success-title2">欢迎加入创联工厂，完善信息享受以下服务 <a href="" title="去完善信息" target="_blank">去完善信息</a></p>
+			<ul class="register-success-ul">
+				<li>
+					<img src="images/register/authority1@2x.png" alt="查看药品价格" />
+					<p>查看药品价格</p>
+				</li>
+				<li>
+					<img src="images/register/authority2@2x.png" alt="参与集采定制" />
+					<p>参与集采定制</p>
+				</li>
+				<li>
+					<img src="images/register/authority3@2x.png" alt="购买出售联贝" />
+					<p>购买出售联贝</p>
+				</li>
+			</ul>
+			<div class="register-sub">完成注册</div>
+		</div>
+		<footer>
+			<span>创联工厂 &nbsp;Copyright &copy;创联 版权所有</span>
+		</footer>
+		</div>
+		<script type="text/javascript" src="js/zepto.min.js" ></script>
+		
+	</body>
+
+</html>

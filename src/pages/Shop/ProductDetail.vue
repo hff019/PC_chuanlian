@@ -5,42 +5,50 @@
             <el-row  :gutter="20">
                 <el-col :span="11">
                     <div class="swiper-top">
-                        <img src="../../images/index/img3.jpg">
+                        <img :src="data.img_cover">
                     </div>
                     <ul class="swiper-list">
-                        <li><img src="../../images/index/img3.jpg"></li>
+                        <li><img :src="data.img_cover" :data-src="data.img_cover"></li>
                         <li><img src="../../images/index/img3.jpg"></li>
                         <li><img src="../../images/index/img3.jpg"></li>
                         <li><img src="../../images/index/img3.jpg"></li>
                     </ul>
                 </el-col>
                 <el-col :span="13">
-                    <h3 class="title">{{}}</h3>
+                    <h3 class="title">{{data.good_name}}</h3>
                     <div class="detail-box1">
-                        <p class="left">￥<span>258</span>/件</p>
-                        <p class="right">采购价<span>200</span>/盒 &nbsp;&nbsp; 零售价<span>200</span>/盒</p>
+                        <p class="left">￥<span>{{data.price*data.tran}}</span>/{{data.big_unit}}</p>
+                        <p class="right">采购价:￥<span>{{data.price}}</span>/{{data.unit}} &nbsp;&nbsp;
+                            零售价:￥<span>{{data.market_price}}</span>/{{data.unit}}</p>
                     </div>
                     <div class="detail-box2">
-                        <div class="left">
+                        <div class="left"  @click="CollectionFn()">
                             <svg class="icon">
                                 <use xlink:href="#icon-product-follow-0"></use>
                             </svg>
-                            <span>收藏产品</span>
+                            <span>{{follow_info}}产品</span>
                         </div>
                         <div class="right">
                             <span>毛利润：<small style="color: #ff3b30">3%</small></span>
-                            <span>销售量：<small style="color: #ff3b30">234</small></span>
+                            <span>销售量：<small style="color: #ff3b30">{{data.sale_num}}</small></span>
                         </div>
                     </div>
                     <ul class="detail-list">
-                        <li>产品参数</li>
-                        <li>产品规格：<span>10mg*10片*2板</span><span>10盒/件</span></li>
+                        <li>产品参数：</li>
+                        <li>产品规格：<span>{{data.spec}} </span> <span> {{data.tran}}{{data.unit}}/{{data.big_unit}}</span></li>
                         <li>生产厂商：<span>华夏药业</span></li>
                         <li>有效期至：<span>2022.12.25</span></li>
                     </ul>
                     <div class="detail-box3">
-                        <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
-                        <el-button type="primary">加入购物车</el-button>
+                        <div class="gw_num" style="float: left">
+                            <em class="lose"  @click="removeToMiniCart()" v-if="nums>0">-</em>
+                            <em class="lose" style="color: #ccc" v-else>-</em>
+                            <div class="num">
+                                <span class="amount">{{nums||0}}</span>
+                            </div>
+                            <em class="add" @click="addToMiniCart()">+</em>
+                        </div>
+                        <el-button type="primary" style="float: left;height: 45px">加入购物车</el-button>
                     </div>
                 </el-col>
             </el-row>
@@ -56,6 +64,8 @@
     import Footer from "@/components/common/Footer"
     import RightLayout from "@/components/common/RightLayout"//右侧导航
     import { mapState,mapMutations} from 'vuex'
+    import { getCollectionList, deleteCollection, SaveCollection } from "@/api/follow.js"
+
     export default {
         name: "ProductDetail",
         components:{
@@ -69,10 +79,12 @@
                     minHeight: document.documentElement.clientHeight+'px',
                     background: '#fff'
                 },
-                num:1,
+                nums:null,
                 factoryId:0,
-                id:0,
-                ShopDetail:[]
+                id: this.$route.query.id,
+                data:[],
+                follow_status: 0,
+                follow_info: '收藏',
             }
         },
         created(){
@@ -80,7 +92,36 @@
             this.id = parseInt(this.$route.params.id);
             this._initData();
         },
+        computed:{
+            ...mapState({
+                //用户是否有权限看价格
+                canShow:state => state.CURRENTUSER.shop_supplier,
+
+                cartList: state =>state.shop.CART_LIST
+            }),
+            shopCart() {
+                return { ...this.cartList[this.factoryId] }
+            },
+            cartNum(){
+                let num = 0;
+                Object.values(this.shopCart).forEach((data,index) =>{
+                    num += data.num;
+                })
+                return num
+            },
+            totalPrice(){
+                let total_price = 0.00
+                Object.values(this.shopCart).forEach((data,index) =>{
+                    total_price += data.num * data.sale_price;
+                })
+                return total_price.toFixed(2)
+            }
+        },
+
         methods:{
+            ...mapMutations([
+                'ADD_CART','REMOVE_CART',
+            ]),
             handleChange(value) {
                 console.log(value);
             },
@@ -91,11 +132,85 @@
                 const {
                     data
                 } = await this.$http.get(`hippo-shop/factory/entities/detail`,{params})
-
-                this.ShopDetail = data
-                console.log(this.ShopDetail)
+                this.data = this._handleData(data)
+                const collect = await getCollectionList()
+                this.collect_list = collect.data
+                //computed follow_status
+                this.collect_list.forEach((item,index)=>{
+                    if(this.id == item.entity_id) {
+                        this.follow_status = 1
+                        this.follow_info = "已收藏"
+                        return
+                    }
+                })
             },
-        }
+            canOption(){
+                if(!this.canShow){
+                    this.$Message.error('当前用户还未审核通过');
+                    return false;
+                }
+                return true
+            },
+            _handleData(data) {
+                Object.values(this.shopCart).forEach((cartItem,cartindex) =>{
+                    console.log(cartItem)
+                    if(this.id === cartItem.id){
+                        this.nums = cartItem.num
+                    }
+                })
+                return data
+            },
+            addToMiniCart(){
+                const item = {
+                    shopId:this.factoryId,
+                    itemId:this.id,
+                    sale_price:this.data.tran*this.data.price
+                }
+                if(this.canOption()){
+                    this.ADD_CART(item)
+                    this.nums++
+                }
+
+            },
+            removeToMiniCart(){
+                const item = {
+                    shopId:this.factoryId,
+                    itemId:this.id,
+                    sale_price:this.data.tran*this.data.price
+                }
+                if(this.canOption()){
+                    this.REMOVE_CART(item)
+                    this.nums--
+
+                }
+            },
+            CollectionFn(){
+                const params = {
+                    entity_id:this.id
+                }
+                console.log(params)
+                if(this.follow_status){//followed
+                    this.$alert('确定取消收藏吗?', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            if(action === 'confirm'){
+                                deleteCollection(this.id)
+                                this.follow_info = '收藏'
+                                this.$message({
+                                    type: 'info',
+                                    message: `取消成功`
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    SaveCollection(params)
+                    this.follow_info = '已收藏'
+                }
+                this.follow_status = !this.follow_status
+            }
+        },
+
     }
 </script>
 
@@ -198,6 +313,53 @@
         .el-button {
             margin-left: 20px;
         }
+    }
+    /*加减*/
+    .gw_num {
+        border:1px solid #f1f1f1;
+        width: 170px;
+        height: 44px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+
+    .gw_num em {
+        color: #333;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 32px;
+        flex: 1;
+        line-height: 44px;
+        font-weight: 100;
+        font-style: normal;
+        background: #ededed;
+    }
+
+    .shop_num em {
+        color: rgb(45, 162, 255);
+    }
+
+    .gw_num .num {
+        font-style: normal;
+        font-size: 24px;
+        flex: 1;
+        display: flex;
+        color: #333;
+        text-align: center;
+        width: 56px;
+        display: inline-block;
+    }
+
+    .gw_num .num p {
+        font-size: 12px;
+        color: rgb(153, 153, 153);
+    }
+
+    .gw_num .num input {
+        width: 50%;
+        text-align: center;
     }
     @media screen and (max-width:1180px) {
         .detail-list {
