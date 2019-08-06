@@ -2,7 +2,6 @@
     <div>
         <page-aptitude v-if="CERT_STATUS === 3" />
         <section v-else-if="CERT_STATUS === 1">
-            <clxsd-head-top title="审核中"></clxsd-head-top>
             <div class="examining">
                 <img src="../images/settings/img1.png" width="168" height="140">
                 <p>正在审核中，请耐心等待。。。</p>
@@ -14,8 +13,8 @@
 
 <script>
     import { mapState } from "vuex";
-    import PageAptitude from "@/page/aptitude/Aptitudes";
-    import PageEditAptitude from "@/page/aptitude/AptitudesEdit";
+    import PageEditAptitude from "./Aptitude/AptitudesEdit";
+    import PageAptitude from "./Aptitude/Aptitudes";
     export default {
         name: 'page-company',
         components:{
@@ -55,6 +54,9 @@
         font-size: 12px;
         color: #575757;
         line-height: 300%;
-        padding-top: 3.5rem;
+        padding-top: 100px;
+        background: #fff;
+        min-height: 340px;
+        border-radius: 5px;
     }
 </style>

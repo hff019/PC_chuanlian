@@ -44,7 +44,7 @@
     @media screen and (max-width:1180px) {
         .width-container {
             .right {
-                width: 800px;
+                width: 760px;
             }
         }
     }

@@ -31,10 +31,6 @@ export default [
                 component: NotAptitudes,
             },
             {
-                path:'/company-info-detail',
-                component: AptitudesInfo,
-            },
-            {
                 path:'/address',
                 component: Address,
             },
