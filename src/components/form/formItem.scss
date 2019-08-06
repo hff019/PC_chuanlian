@@ -1,14 +1,8 @@
 .c-form-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 50px;
-  font-size: 14px;
-  color: #999;
-  border-bottom: 1px solid #ccc; /* no */
+
+  height: 238px;
 
   > label {
-    display: inline-block;
     flex: none;
     width: 4em;
   }
@@ -35,6 +29,5 @@ form {
   }
 
   .input-wrap {
-    border-bottom: 1px solid #333; /* no */
   }
 }

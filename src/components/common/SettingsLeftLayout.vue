@@ -2,7 +2,7 @@
     <ul class="list">
         <li><b>我的订单</b> </li>
         <li v-bind:class="{ active:1 == current }"  v-on:click="addClass(1)"><router-link to="/my-info">个人信息</router-link> </li>
-        <li v-bind:class="{ active:2 == current }"  v-on:click="addClass(2)"><router-link to="/company-info-edit">公司信息</router-link> </li>
+        <li v-bind:class="{ active:2 == current }"  v-on:click="addClass(2)"><router-link to="/company-info">公司信息</router-link> </li>
         <li v-bind:class="{ active:3 == current }"  v-on:click="addClass(3)"><router-link to="/address">地址管理</router-link> </li>
         <li><router-link to="">收款方式</router-link> </li>
         <li><p class="line"></p></li>

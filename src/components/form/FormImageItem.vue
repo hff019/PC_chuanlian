@@ -1,12 +1,12 @@
 <template>
-    <section class="c-form-item c-form-image-item" @click="beforeSelectFile" style="width: 100%;height: 1.2rem">
-        <div :class="shape" class="avatar-wrap" style="height: 1.2rem">
+    <section class="c-form-item c-form-image-item" @click="beforeSelectFile">
+        <div :class="shape" class="avatar-wrap">
             <img :src="avatar" class="m-avatar-img" v-if="avatar">
-            <svg viewBox="0 0 24 24" class="m-style-svg m-svg-big" v-else style="width: 1.2rem;height: 1.2rem">
+            <svg viewBox="0 0 24 24" class="icons" v-else>
                 <use :xlink:href="'#icon-' + icon"/>
             </svg>
         </div>
-        <span class="avatar-label">{{ label }}</span>
+        <p class="avatar-label">{{ label }}</p>
         <ImageUploader
                 ref="uploader"
                 :value="value"
@@ -27,7 +27,7 @@
             value: { type: null, default: () => ({}) },
             label: { type: String, default: '上传头像' },
             readonly: { type: Boolean, default: false },
-            icon: { type: String, default: 'hehuo-wode-zhengjianzhao' },
+            icon: { type: String, default: 'companyMes-upload' },
             //文件类型
             type:{
                 type: String,
@@ -56,18 +56,18 @@
 <style lang="scss" scoped>
     @import url("./formItem.scss");
 form .c-form-image-item {
-    padding-right: 20px;
 
     .avatar-wrap {
         flex: none;
-        width: 45px;
-        height: 45px;
+        width: 100%;
+        height: 188px;
         &.circle {
             border-radius: 100%;
         }
 
         > img {
-            width: 100%;
+            width: 75%;
+            max-height: 90%;
         }
     }
 
@@ -75,7 +75,13 @@ form .c-form-image-item {
         flex: auto;
         margin-left: 15px;
         color: #333;
-        font-size: .28rem;
+        font-size: 14px;
     }
 }
+    .icons {
+        width: 120px;
+        height: 120px;
+        position: relative;
+        margin-top: 50px;
+    }
 </style>

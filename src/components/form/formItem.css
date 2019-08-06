@@ -1,14 +1,6 @@
 .c-form-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 50px;
-  font-size: 14px;
-  color: #999;
-  border-bottom: 1px solid #ccc;
-  /* no */ }
+  height: 238px; }
   .c-form-item > label {
-    display: inline-block;
     flex: none;
     width: 4em; }
   .c-form-item .input-wrap {
@@ -24,8 +16,5 @@
 
 form .c-form-item {
   border-bottom: none; }
-form .input-wrap {
-  border-bottom: 1px solid #333;
-  /* no */ }
 
 /*# sourceMappingURL=formItem.css.map */

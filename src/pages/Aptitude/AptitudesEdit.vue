@@ -3,9 +3,9 @@
         <div v-if="!is_onsubmit">
         <p class="title">基本信息</p>
         <el-form ref="form"  label-width="80px">
-            <div>
+            <div v-if="userType === 3">
                 <el-form-item label="公司类型">
-                    <el-select v-model="companyType" placeholder="公司类型" style="width: 300px">
+                    <el-select v-model="companyType" placeholder="公司类型" style="width: 300px" @change="choiceComType(value)">
                         <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -27,144 +27,74 @@
             </div>
             <ul class="input-list">
                 <li v-if="is_three">
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.business_license" :src="aptitudeData.business_license" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>营业执照</p>
+                    <FormImageItem
+                            v-model="aptitudeData.business_license"
+                            label="营业执照"
+                            type="id"
+                    />
                 </li>
                 <li v-if="!is_three">
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.oscc" :src="aptitudeData.oscc" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>组织结构代码证</p>
+                    <FormImageItem
+                            v-model="aptitudeData.oscc"
+                            label="组织结构代码证"
+                            type="id"
+                    />
                 </li>
                 <li v-if="!is_three">
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.tscg" :src="aptitudeData.tscg" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>税务登记证（国税）</p>
+                    <FormImageItem
+                            v-model="aptitudeData.trcg"
+                            label="税务登记证（国税）"
+                            type="id"
+                    />
                 </li>
                 <li v-if="!is_three">
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.tcr" :src="aptitudeData.tcr" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>税务登记证（地税）</p>
+                    <FormImageItem
+                            v-model="aptitudeData.trc"
+                            label="税务登记证（地税）"
+                            type="id"
+                    />
+                </li>
+                <li  v-if="userType !==1 && userType !== 4">
+                    <FormImageItem
+                            v-model="aptitudeData.hyg_l"
+                            label="卫生许可证"
+                            type="id"
+                    />
+                </li>
+                <li  v-if="userType !==1 && userType !== 4">
+                    <FormImageItem
+                            v-model="aptitudeData.health_c"
+                            label="健康证"
+                            type="id"
+                    />
+                </li>
+                <li  v-if="userType ===1 && userType !== 4">
+                    <FormImageItem
+                            v-model="aptitudeData.pblg"
+                            :label="'药品生产许可证'"
+                            type="id"
+                    />
+                </li>
+                <li >
+                    <FormImageItem
+                            v-model="aptitudeData.pbl"
+                            :label="'药品经营许可证'"
+                            type="id"
+                    />
+                </li>
+                <li v-if="userType ===1">
+                    <FormImageItem
+                            v-model="aptitudeData.gmp"
+                            :label="'药品生产质量管理规范认证证书(GMP)'"
+                            type="id"
+                    />
                 </li>
                 <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.hyg_l" :src="aptitudeData.hyg_l" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>卫生许可证</p>
-                </li>
-                <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.health_c" :src="aptitudeData.health_c" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>健康证</p>
-                </li>
-                <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.pblg" :src="aptitudeData.pblg" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>药品生产许可证</p>
-                </li>
-                <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.pbl" :src="aptitudeData.pbl" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>药品经营许可证</p>
-                </li>
-                <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.gmp" :src="aptitudeData.gmp" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>药品生产质量管理规范认证证书(GMP)</p>
-                </li>
-                <li>
-                    <el-upload
-                            class="avatar-uploader"
-                            action=""
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="aptitudeData.gsp" :src="aptitudeData.gsp" class="avatar">
-                        <svg>
-                            <use xlink:href="#icon-companyMes-upload"></use>
-                        </svg>
-                    </el-upload>
-                    <p>药品经营质量管理规范认证证书(GSP)</p>
+                    <FormImageItem
+                            v-model="aptitudeData.gsp"
+                            :label="'药品经营质量管理规范认证证书(GSP)'"
+                            type="id"
+                    />
                 </li>
             </ul>
             <div style="text-align: center;margin-bottom: 20px">
@@ -182,11 +112,16 @@
 </template>
 
 <script>
-    //import FormImageItem from "@/components/form/FormImageItem";
+    import FormImageItem from "@/components/form/FormImageItem";
     import ImagePoster from '@/components/ImagePoster.vue'
 
     export default {
         name: "AptitudesEdit",
+        components: {
+            FormImageItem,
+            ImagePoster
+        },
+        props:["userType"],
         data() {
             return {
                 is_three:false,
@@ -222,23 +157,8 @@
             }
         },
         methods: {
-            handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            },
-            onSubmit(){
-
+            choiceComType(value){
+                console.log(value)
             }
         }
     }

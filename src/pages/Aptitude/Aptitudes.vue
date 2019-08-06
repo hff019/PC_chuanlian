@@ -4,11 +4,14 @@
         <ul class="info-list">
             <li>
                 <span>公司类型：</span>
-                <small>商业公司</small>
+                <small v-if="USER_TYPE === 1">制药工业</small>
+                <small v-else-if="USER_TYPE === 2">商业公司</small>
+                <small v-else-if="USER_TYPE === 3">连锁药店</small>
+                <small v-else>未知</small>
             </li>
             <li>
                 <span>公司名称：</span>
-                <small>哈尔滨药业</small>
+                <small>{{userInfo.companyName || '未认证'}}</small>
             </li>
         </ul>
         <p class="title">公司资质</p>
@@ -21,55 +24,55 @@
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.oscc">
                 </div>
                 <p>组织结构代码证</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.trcg">
                 </div>
                 <p>税务登记证（国税）</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.trc">
                 </div>
                 <p>税务登记证（地税）</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.hyg_l">
                 </div>
                 <p>卫生许可证</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.health_c">
                 </div>
                 <p>健康证</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="aptitudeData.pblg">
                 </div>
                 <p>药品生产许可证</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.pbl">
                 </div>
                 <p>药品经营许可证</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="aptitudeData.gmp">
                 </div>
                 <p>药品生产质量管理规范认证证书(GMP)</p>
             </li>
             <li>
                 <div>
-                    <img src="../../images/img.png">
+                    <img :src="userInfo.gsp">
                 </div>
                 <p>药品经营质量管理规范认证证书(GSP)</p>
             </li>
@@ -83,12 +86,15 @@
 </template>
 
 <script>
+    import { mapState } from "vuex";
     export default {
         name: "Aptitudes",
+        props:["userType"],
         data(){
             return{
                 big_url:require("../../images/img.png"),
                 is_show:false,
+                threeToOne:true,
                 aptitudeData:{
                     gsp:null,//药品经营质量管理规范认证证书(GSP)
                     gmp:null,//药品生产质量管理规范认证证书(GMP)
@@ -102,6 +108,51 @@
                     trc:null,//税务登记证（地税）
                 },
             }
+        },
+        computed: {
+            ...mapState({
+                USER_TYPE: state => state.CURRENTUSER.user_type,
+                userInfo: state => {
+                    const currentInfo = state.CURRENTUSER
+                    const configInfo = state.CONFIG
+                    //console.log(currentInfo)
+                    let companyName = '未认证'
+                    let companyAddress = ''
+                    let business_license,oscc,pbl,health_c,trcg,trc,gsp,pblg,gmp
+                    let threeToOne = 1
+                    if(currentInfo['shop_supplier']) {
+                        companyName = currentInfo['shop_supplier']['display_name'] || currentInfo['shop_supplier']['name']
+                        companyAddress = currentInfo['shop_supplier']['address'] || currentInfo['location']
+                    }
+                    if(currentInfo['certification']){
+                        let aptitudeData = currentInfo['certification']['data']
+                        console.log(aptitudeData);
+                        business_license = aptitudeData.business_license
+                        threeToOne = parseInt( aptitudeData.is_three_one)
+                        oscc = aptitudeData.oscc
+                        trcg = aptitudeData.trcg
+                        trc = aptitudeData.trc
+                        pbl = aptitudeData.pbl
+                        gsp = aptitudeData.gsp
+                        health_c = aptitudeData.health_c
+                        pblg = aptitudeData.pblg
+                        gmp = aptitudeData.gmp
+                    }
+                    return {
+                        companyName,
+                        companyAddress,
+                        business_license,
+                        threeToOne,
+                        oscc,trcg,trc,
+                        pbl,
+                        gsp,
+                        health_c,
+                        pblg,
+                        gmp
+                    }
+
+                },
+            })
         },
         methods: {
             FnImage(url){
