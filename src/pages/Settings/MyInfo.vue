@@ -37,13 +37,11 @@
                         :value="value"
                         @input="d"
                         @update:src="avatar=$event"/>
-        <div class="up" @click="beforeSelectFile">
-            <button>相册选择</button>
-        </div>
         <div class="change-logo">
             <div class="left">
-                <img src="../../images/default.png" width="150" height="150">
-                <input type="file">
+                <img src="../../images/default.png" v-if="userInfo.userLogo==''" width="150" height="150">
+                <img :src="userInfo.userLogo" v-else width="150" height="150">
+                <div  @click="beforeSelectFile"></div>
                 <p>点击头像更换照片</p>
             </div>
             <div class="right">
@@ -182,7 +180,7 @@
             img {
                 margin-top: 30px;
             }
-            input {
+            div {
                 position: absolute;
                 width: 150px;
                 height: 150px;

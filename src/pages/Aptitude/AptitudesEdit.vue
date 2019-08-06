@@ -182,6 +182,9 @@
 </template>
 
 <script>
+    //import FormImageItem from "@/components/form/FormImageItem";
+    import ImagePoster from '@/components/ImagePoster.vue'
+
     export default {
         name: "AptitudesEdit",
         data() {
