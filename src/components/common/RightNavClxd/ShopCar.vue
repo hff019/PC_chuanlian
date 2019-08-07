@@ -5,31 +5,111 @@
             <span @click="closedCarBox()">关闭</span>
         </div>
         <div class="shop-container">
-            <div class="shop-list">
-                <router-link to="" class="left">
-                    <img src="../../../images/index/img3.jpg" class="img">
-                    <div>
-                        <p class="title-p">维生素</p>
-                        <p class="price">￥100元/件 <span>&Chi;2</span></p>
-                    </div>
-                </router-link>
-                <div class="right">删除</div>
-            </div>
+            <CartsShoplist :data="data"/>
         </div>
         <div class="total">
             <div class="info">
-                <p><span>6</span>件产品</p>
-                <p>共计：<span>￥5212.00</span></p>
+                <p><span>{{totle_num}}</span>件产品</p>
+                <p>共计：<span>￥{{total_price}}</span></p>
             </div>
-            <div class="btn">去结算</div>
+            <router-link to="/my-shop" class="btn" target="_blank">去结算</router-link>
         </div>
     </div>
 </template>
 
 <script>
+    import CartsShoplist from '@/components/shopcarSmall/CartsShopList'
+    import Empty from '@/components/shopcar/EmptyCar'
+    import { mapState,mapMutations} from 'vuex'
+    import { supplierFactoryEntities } from '@/api/supplier'
+
     export default {
         name: "ShopCar",
-        props:["closedCarBox"]
+        props:["closedCarBox"],
+        components: {
+            CartsShoplist,
+            Empty,
+        },
+        data() {
+            return {
+                shopId:0,
+                title:'购物车',
+                isEmpty: true,
+                data:{
+                    shops:[],
+                },
+                totle_num:0,
+                total_price:0,
+            }
+        },
+        created(){
+            this.shopId = this.$route.params.shopId ? parseInt(this.$route.params.shopId):0
+            if(this.shopId){
+                this.route = `/my-shop/${this.shopId}`
+            }
+        },
+        mounted(){
+            this.initData()
+        },
+        computed:{
+            ...mapState({
+                cartList: state =>state.shop.CART_LIST
+            }),
+        },
+        methods: {
+            async initData(){
+                let ids = []
+                let idMapQ = {}
+                let cartData = this.shopId ? this.cartList[this.shopId]:this.cartList
+                if(cartData){
+                    if(this.shopId){
+                        Object.values(cartData).forEach(item => {
+
+                            ids.push(item.id)
+                            idMapQ[item.id] = item.num
+                        })
+                    }else{
+                        Object.values(cartData).forEach(item => {
+                            Object.values(item).forEach(_item =>{
+                                ids.push(_item.id)
+                                idMapQ[_item.id] = _item.num
+                            })
+
+                        })
+                    }
+                }
+                if(ids.length){
+                    const { data } = await supplierFactoryEntities(ids.join(','))
+                    this.data.shops = this._handleData(data,idMapQ)
+                }
+            },
+            _handleData(data,map){
+                let shops = {}
+                data.forEach((item,index) =>{
+                    console.log(item)
+                    item.sale_price = item.price * item.tran
+                    item.num = map[item.id]
+                    this.totle_num+=item.num
+                    this.total_price += item.price * item.tran
+                    item.checked = false
+                    item.shopId = item.supplier.id
+                    item.show_unit = item.big_unit
+                    if(shops[item.supplier.id]){
+                        shops[item.supplier.id]['items'] = shops[item.supplier.id]['items'].concat([item])
+                    }else{
+                        shops[item.supplier.id] = {
+                            shopId:item.supplier.id,
+                            shopName: item.supplier.display_name || item.supplier.name,
+                            logo:item.supplier.logo,
+                            type:item.supplier.type,
+                            checked:false,
+                            items:[].concat([item])
+                        }
+                    }
+                })
+                return Object.values(shops)
+            },
+        }
     }
 </script>
 

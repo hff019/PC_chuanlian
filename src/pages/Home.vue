@@ -30,10 +30,10 @@
                 </div>
                 <div class="product-list">
                     <div class="home-list">
-                        <ProductClxd></ProductClxd>
+                        <ProductClxd v-for="(item,index) in product_items" :data="item" :factory-id="factoryId"></ProductClxd>
                     </div>
                     <div class="home-list">
-                        <ProductClxd></ProductClxd>
+                        <ProductClxd v-for="(item,index) in product_items" :data="item" :factory-id="factoryId"></ProductClxd>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,8 @@
             <!--生产厂商-->
             <TitleCell :title="'生产厂商'" :url="'/factory'"></TitleCell>
             <div class="width-container" style="margin-bottom: 25px">
-                <FactoryClxd></FactoryClxd>
+                <FactoryClxd v-for="(item,index) in suppliers" :data="item"
+                :key="`factory_${index}`" style="display: inline-block"></FactoryClxd>
             </div>
             <div class="width-container">
                 <img src="../images/index/add3.png" style="width: 100%">
@@ -103,7 +104,7 @@
             <!--商业公司-->
             <TitleCell :title="'商业公司'" :url="'/business'"></TitleCell>
             <div class="width-container">
-                <business-clxd></business-clxd>
+                <business-clxd v-for="(item,index) in business" :data="item" class="item" :entryBusinessShop = "entryBusinessShop" style="display: inline-block"></business-clxd>
             </div>
         </div>
     </div>
@@ -119,6 +120,10 @@
 
     import TitleCell from "@/components/modules/IndexTitle"
 
+    import {mapState} from "vuex";
+    import {findNearBySuppliers} from '@/api/supplier.js';
+    import {adList} from "@/api/ad";
+
     export default {
         name: "Home",
         components: {
@@ -131,12 +136,64 @@
         },
         data() {
             return {
+                suppliers: {}, //生产厂商
+                business:[], //商业公司
                 items: [
                     '../images/index/banner.png'
+                ],
+                factoryId:0,
+                product_items:[
+                    {
+                        id:1,
+                        img_cover:'../images/index/banner.png',
+                        good_name:"维生素",
+                        spec:"100/盒一件",
+                        tran:"100",
+                        unit:"盒",
+                        big_unit:"件",
+                        price:"5",
+                        sale_num:1,
+                    }
                 ]
             }
         },
-        methods: {}
+        methods: {
+            async initData(params) {
+                const {
+                    data
+                } = await findNearBySuppliers(params)
+                this.business = data.items
+            },
+            async initData2(params2) {
+                const {dataF} = await adList({channel: 'app', space: 'home-business'})
+                this.swipers = dataF
+                findNearBySuppliers(params2)
+                .then(({data = []}) => {
+                    this.suppliers = data.items
+                    console.log(this.suppliers)
+                })
+            },
+            entryBusinessShop(item) {
+                this.$store.commit('SAVE_CURRENT_BUSINESS_SHOP', item.id)
+                this.$store.commit('SAVE_CURRENT_BUSINESS_SHOP_DATA', item)
+                this.$router.push('/business-home')
+            },
+        },
+        created() {
+            var params = {
+                page: 1,
+                type: 'business',
+                limit: 10,
+            }
+            this.initData(params)
+
+            var params2 = {
+                page: 1,
+                type: 'factory',
+                limit: 10
+            }
+            this.initData2(params2)
+        },
     }
 </script>
 

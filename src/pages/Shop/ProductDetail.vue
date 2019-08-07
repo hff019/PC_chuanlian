@@ -39,7 +39,7 @@
                         <li>生产厂商：<span>华夏药业</span></li>
                         <li>有效期至：<span>2022.12.25</span></li>
                     </ul>
-                    <div class="detail-box3">
+                    <div class="detail-box3" v-if="canShow">
                         <div class="gw_num" style="float: left">
                             <em class="lose"  @click="removeToMiniCart()" v-if="nums>0">-</em>
                             <em class="lose" style="color: #ccc" v-else>-</em>
@@ -146,7 +146,7 @@
             },
             canOption(){
                 if(!this.canShow){
-                    this.$Message.error('当前用户还未审核通过');
+                    this.$message('当前用户还未审核通过');
                     return false;
                 }
                 return true
