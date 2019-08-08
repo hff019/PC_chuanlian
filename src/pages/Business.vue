@@ -115,7 +115,7 @@
         width: 110px;
         height: 490px;
         border-radius: 4px;
-        top: 23.5%;
+        top: 220px;
         left: 40px;
         overflow: hidden;
         z-index: 99;
@@ -154,5 +154,15 @@
     .item {
         display: inline-block;
     }
-
+    @media screen and (max-width: 1180px) {
+        .area-list {
+            left: 0px;
+            width: 90px;
+        }
+    }
+    @media screen and (min-width: 1920px) {
+        .area-list {
+            left: 10%;
+        }
+    }
 </style>

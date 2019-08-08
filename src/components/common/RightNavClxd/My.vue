@@ -1,16 +1,48 @@
 <template>
     <div class="My">
-        <img src="../../../images/default.png" width="68" height="68">
+        <img src="../../../images/default.png" width="68" height="68" v-if="logo == null">
+        <img :src="logo.url" width="68" height="68" v-else />
         <p @click="landOut()">退出账号</p>
-        <router-link to="">我的订单</router-link>
+        <router-link to="/business-order" v-if="supplier !== null">我的订单</router-link>
+        <router-link to="/not-company-my" v-else>我的订单</router-link>
     </div>
 </template>
 
 <script>
-
+    import {mapState} from 'vuex'
     export default {
         name: "My",
-        props:['landOut'],
+        computed:{
+            ...mapState({
+                USER_INFO: state => state.CURRENTUSER
+            }),
+            supplier(){
+                return this.USER_INFO.shop_supplier;
+            },
+            logo(){
+                return this.USER_INFO.avatar;
+            }
+        },
+        methods:{
+            landOut(){
+                this.$confirm('此操作将退出登陆, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.dispatch('SIGN_OUT');
+                    this.$message({
+                        type: 'success',
+                        message: '退出成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
+        }
 
     }
 </script>

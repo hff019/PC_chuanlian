@@ -4,7 +4,7 @@
             <ul>
                 <li @mouseenter="my_frame = !my_frame" @mouseleave="my_frame = !my_frame">
                     <router-link to="/my-info" class="my">
-                        <svg class="icon" aria-hidden="true">
+                        <svg class="icon" aria-hidden="true" style="margin-bottom: 3px">
                             <use xlink:href="#icon-pc-home-inCenter"></use>
                         </svg>
                         <span>账号</span>
