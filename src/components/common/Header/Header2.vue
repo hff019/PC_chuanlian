@@ -8,13 +8,13 @@
                 </div>
                 <div class="header-middle-form" style="width: 60%">
                     <ul>
-                        <li>
+                        <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
                             <router-link to="/home">首页</router-link>
                         </li>
-                        <li>
+                        <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)">
                             <router-link to="/my-info">账户设置</router-link>
                         </li>
-                        <li>
+                        <li v-bind:class="{ active:3 == current}"  v-on:click="addClass(3)">
                             <router-link to="">消息</router-link>
                         </li>
                     </ul>
@@ -35,6 +35,16 @@
         name: "Header2",
         components:{
             HeaderTop
+        },
+        data(){
+            return {
+                current:1
+            }
+        },
+        methods:{
+            addClass:function(index){
+                this.current=index;
+            },
         }
     }
 </script>
@@ -58,7 +68,6 @@
         ul {
             li {
                 list-style: none;
-
             }
         }
     }
@@ -93,6 +102,12 @@
                     }
                 }
             }
+            .active {
+                a {
+                    color: #26a2ff;
+                }
+            }
         }
     }
+
 </style>

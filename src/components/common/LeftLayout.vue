@@ -5,7 +5,9 @@
             <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
                 <span  @click="authToRouter('/business-order')">产品订单</span>
             </li>
-            <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)"><router-link to="/factory-order">工业订单</router-link> </li>
+            <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)">
+                <span  @click="authToRouter('/factory-order')">工业订单</span>
+            </li>
             <li><router-link to="">集采订单</router-link> </li>
             <li><router-link to="">发布订单</router-link> </li>
             <li><p class="line"></p></li>
@@ -42,6 +44,7 @@
                         message: '当前用户未认证',
                         type: 'warning'
                     });
+                    this.$router.push("/not-company-my");
                 }
             }
         },

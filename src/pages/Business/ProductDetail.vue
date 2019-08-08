@@ -4,13 +4,10 @@
             <el-row  :gutter="20">
                 <el-col :span="11">
                     <div class="swiper-top">
-                        <img src="../../images/index/img3.jpg">
+                        <img :src="data.img_cover">
                     </div>
                     <ul class="swiper-list">
-                        <li><img src="../../images/index/img3.jpg"></li>
-                        <li><img src="../../images/index/img3.jpg"></li>
-                        <li><img src="../../images/index/img3.jpg"></li>
-                        <li><img src="../../images/index/img3.jpg"></li>
+                        <li><img :src="data.img_cover" :data-src="data.img_cover"></li>
                     </ul>
                 </el-col>
                 <el-col :span="13">
@@ -30,7 +27,7 @@
                         <li>生产厂商：<span>{{goods_company}}</span></li>
                         <li>有效期至：<span>{{goods_time}}</span></li>
                     </ul>
-                    <div class="detail-box3">
+                    <div class="detail-box3" v-if="canShow">
                         <div class="gw_num" v-if="(!data.is_multi_spec && canShow)">
                             <em class="lose"  @click="removeToMiniCart()">-</em>
                             <div class="num">
@@ -161,10 +158,17 @@
                 }
                 console.log(params)
                 if(this.follow_status){//followed
-                    this.$messagebox.confirm("确定要取消收藏吗?").then(action => {
-                        if(action === 'confirm'){
-                            deleteCollection(this.id)
-                            this.follow_info = '收藏'
+                    this.$alert('确定取消收藏吗?', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            if(action === 'confirm'){
+                                deleteCollection(this.id)
+                                this.follow_info = '收藏'
+                                this.$message({
+                                    type: 'info',
+                                    message: `取消成功`
+                                });
+                            }
                         }
                     });
                 }else{

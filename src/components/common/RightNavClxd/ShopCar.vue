@@ -4,9 +4,10 @@
             <span>购物车</span>
             <span @click="closedCarBox()">关闭</span>
         </div>
-        <div class="shop-container">
+        <div class="shop-container" v-if="data.length>0">
             <CartsShoplist :data="data"/>
         </div>
+        <Empty v-else />
         <div class="total">
             <div class="info">
                 <p><span>{{totle_num}}</span>件产品</p>
@@ -19,7 +20,7 @@
 
 <script>
     import CartsShoplist from '@/components/shopcarSmall/CartsShopList'
-    import Empty from '@/components/shopcar/EmptyCar'
+    import Empty from '@/components/Empty'
     import { mapState,mapMutations} from 'vuex'
     import { supplierFactoryEntities } from '@/api/supplier'
 

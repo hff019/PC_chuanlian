@@ -138,6 +138,7 @@
                 items: [
                     '../images/index/banner.png'
                 ],
+                swipers:[],
                 factoryId:0,
                 product_items:[
                     {
@@ -162,8 +163,9 @@
                 this.business = data.items
             },
             async initData2(params2) {
-                const {dataF} = await adList({channel: 'app', space: 'home-business'})
-                this.swipers = dataF
+                const {dataAdd} = await adList({channel: 'app', space: 'home-business'})
+                this.swipers = dataAdd
+                console.log(dataAdd)
                 findNearBySuppliers(params2)
                 .then(({data = []}) => {
                     this.suppliers = data.items

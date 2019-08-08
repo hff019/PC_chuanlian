@@ -15,13 +15,13 @@
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
                             <div v-if="supplier!=null">
-                                <el-dropdown-item><router-link to="/business-order" class="header-top-a">产品订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="/business-order-my" class="header-top-a">产品订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="" class="header-top-a">订制订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="" class="header-top-a">联采订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="" class="header-top-a">我的发布</router-link></el-dropdown-item>
                             </div>
                             <div v-else>
-                                <el-dropdown-item><router-link to="/not-company-my" class="header-top-a">产品订单</router-link></el-dropdown-item>
+                                <el-dropdown-item><router-link to="/not-company-business" class="header-top-a">产品订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="/not-company" class="header-top-a">订制订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="/not-company" class="header-top-a">联采订单</router-link></el-dropdown-item>
                                 <el-dropdown-item><router-link to="/not-company" class="header-top-a">我的发布</router-link></el-dropdown-item>

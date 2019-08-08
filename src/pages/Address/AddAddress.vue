@@ -29,7 +29,7 @@
                     <el-input type="tel" v-model="tel" placeholder="请输入收货人手机号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-checkbox v-model="switch_checked" @change="turn">默认</el-checkbox>
+                    <el-checkbox v-model="switch_checked" @change="turn">设为默认地址</el-checkbox>
                 </el-form-item>
                 <div>
                     <el-button type="primary" style="margin: 0 auto;display: block"  @click="onSave">保存收货地址</el-button>

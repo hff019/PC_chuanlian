@@ -3,40 +3,45 @@
         <div class="right-fixed">
             <ul>
                 <li @mouseenter="my_frame = !my_frame" @mouseleave="my_frame = !my_frame">
-                    <div class="my">
+                    <router-link to="/my-info" class="my">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-pc-home-inCenter"></use>
                         </svg>
                         <span>账号</span>
-                    </div>
+                    </router-link>
                     <My v-show="my_frame" :landOut="landOut"></My>
                 </li>
                 <li>
                     <div @mouseenter="shop_frame = !shop_frame" @mouseleave="shop_frame = !shop_frame">
-                        <div class="shopcar">
+                        <router-link to="/my-shop" class="shopcar">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-pc-home-shoppingCar"></use>
                             </svg>
                             <span>购物车</span>
                             <small>1</small>
-                        </div>
+                        </router-link>
                         <div v-show="shop_frame">
                             <ShopFollow :closedCarBox="closedCarBox"></ShopFollow>
                         </div>
                     </div>
                 </li>
                 <li @mouseenter="business_frame = !business_frame" @mouseleave="business_frame = !business_frame">
-                    <svg class="icon" aria-hidden="true"  @click="business_frame = !business_frame">
-                        <use xlink:href="#icon-pc-home-fectoryCollection"></use>
-                    </svg>
+                    <router-link to="/business-follow">
+                        <svg class="icon" aria-hidden="true"  @click="business_frame = !business_frame">
+                            <use xlink:href="#icon-pc-home-fectoryCollection"></use>
+                        </svg>
+                    </router-link>
                     <div v-if="business_frame">
                         <BusinessFollow :closedBusinessBox="closedBusinessBox"></BusinessFollow>
                     </div>
                 </li>
                 <li @mouseenter="product_frame = !product_frame" @mouseleave="product_frame = !product_frame">
-                    <svg class="icon" aria-hidden="true"  @click="product_frame = !product_frame">
-                        <use xlink:href="#icon-pc-home-productCollection"></use>
-                    </svg>
+                    <router-link to="/product-follow">
+                        <svg class="icon" aria-hidden="true"  @click="product_frame = !product_frame">
+                            <use xlink:href="#icon-pc-home-productCollection"></use>
+                        </svg>
+                    </router-link>
+
                     <div v-if="product_frame">
                         <ProductFollow :closedProductBox="closedProductBox"></ProductFollow>
                     </div>

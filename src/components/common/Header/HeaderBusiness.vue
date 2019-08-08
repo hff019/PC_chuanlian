@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import HeaderTop from "./HeaderTop"
+    import HeaderTop from "./HeaderTopCompany"
     import {mapState} from 'vuex';
     export default {
         name: "HeaderBusiness",

@@ -29,23 +29,23 @@
                     </el-menu>
                 </div>
                 <ul class="big-nav-list">
-                    <li>
+                    <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
                         <router-link to="/home">首页</router-link>
                     </li>
-                    <li>
+                    <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)">
                         <router-link to="/product">产品</router-link>
                     </li>
-                    <li>
+                    <li v-bind:class="{ active:3 == current}"  v-on:click="addClass(3)">
                         <router-link to="/customized">订制</router-link>
                     </li>
-                    <li>
-                        <router-link to="/collect">联采</router-link>
+                    <li v-bind:class="{ active:4 == current}"  v-on:click="addClass(4)">
+                        <router-link to="/collect">集采</router-link>
                     </li>
                     <li><span>|</span></li>
-                    <li>
+                    <li v-bind:class="{ active:5 == current}"  v-on:click="addClass(5)">
                         <router-link to="/factory">生产厂家</router-link>
                     </li>
-                    <li>
+                    <li v-bind:class="{ active:6 == current}"  v-on:click="addClass(6)">
                         <router-link to="/business">商业公司</router-link>
                     </li>
                 </ul>
@@ -62,7 +62,16 @@
         components: {
             HeaderTop
         },
-
+        data(){
+          return {
+              current:1
+          }
+        },
+        methods:{
+            addClass:function(index){
+                this.current=index;
+            },
+        }
 
     }
 </script>
@@ -113,6 +122,11 @@
             top: -6px;
             position: relative;
             left: -2px;
+        }
+    }
+    .active {
+        a {
+            color: #26a2ff;
         }
     }
 </style>

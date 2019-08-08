@@ -1,5 +1,5 @@
 <template>
-    <div class="AptitudesEdit">
+    <div class="AptitudesEdit" style="padding: 20px">
         <div v-if="!is_onsubmit">
         <p class="title">基本信息</p>
         <el-form ref="form"  label-width="80px">

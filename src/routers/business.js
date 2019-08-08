@@ -1,8 +1,9 @@
 import LayoutBusiness from "@/pages/LayoutBusiness"
 import LayoutBusinessMy from "@/pages/LayoutBusinessMy"
 import BusinessHome from "@/pages/Business/BusinessHome"
-//import BusinessMyOrder from "@/pages/order/BusinessMyOrder"
+import BusinessMyOrder from "@/pages/order/BusinessOrder"
 import BusinessProductDetail from "@/pages/Business/ProductDetail"
+import NotAptitudes from "@/pages/Aptitude/NotAptitudes";
 
 export default [
     {
@@ -30,12 +31,14 @@ export default [
             title: "商业",
         },
         children:[
-            /*
             {
                 path:'/business-my-order',
                 component: BusinessMyOrder
             },
-             */
+            {
+                path:'/not-company-business',
+                component: NotAptitudes,
+            },
         ]
     },
 ]

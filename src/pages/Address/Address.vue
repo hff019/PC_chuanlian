@@ -5,9 +5,10 @@
             <el-row  :gutter="20" v-if="addressList.length>0">
                 <el-col :lg="8" :md="8"  v-for="(item,index) in addressList">
                     <div class="address-item">
-                        <img src="../../images/settings/line2.png" width="100%" class="img1"  v-if="!item.checked">
-                        <img src="../../images/settings/line1.png" width="100%" class="img2"  v-if="item.checked">
-                        <span class="sp1"  @click="chooseAddress(index)">设为默认地址</span>
+                        <img src="../../images/settings/line2.png" width="100%" class="img1"  v-if="item.is_default ==0">
+                        <img src="../../images/settings/line1.png" width="100%" class="img2"  v-if="item.is_default ==1">
+                        <span class="sp1"  @click="chooseAddress(index)" v-if="item.is_default != 1">设为默认地址</span>
+                        <span class="sp2" v-if="item.is_default == 1">默认地址</span>
                         <ul class="address-item-list">
                             <li>
                                 <svg class="icon">
@@ -32,13 +33,13 @@
                             <span  @click="deleteAddressFn(index,item)">删除</span>
                             <router-link :to="`/address-edit/${item.id}`">修改</router-link>
                         </div>
-                        <svg class="icons" v-if="item.checked">
+                        <svg class="icons" v-if="item.is_default == 1">
                             <use xlink:href="#icon-positionMeanger-chosed"></use>
                         </svg>
                     </div>
                 </el-col>
             </el-row>
-            <Empty :message="'您还没有添加收货地址, 请在下方添'" v-else/>
+            <Empty :message="'您还没有添加收货地址, 请在下方添'" v-else style="padding-top: 30px"/>
         </div>
         <div class="address-box">
             <p class="title">新增收货地址</p>
@@ -61,22 +62,7 @@
         data(){
             return{
                 is_checked:false,
-                addressList:[
-                    {
-                        consignee:"张无忌",
-                        tel:"17739382930",
-                        is_default:1,
-                        full_address:"河南省郑州市金水区",
-                        checked:true
-                    },
-                    {
-                        consignee:"张无忌",
-                        tel:"17739382930",
-                        is_default:1,
-                        full_address:"河南省郑州市金水区",
-                        checked:false
-                    }
-                ]
+                addressList:[]
             }
         },
 
@@ -171,7 +157,7 @@
             position: absolute;
             top:0px;
         }
-        .sp1 {
+        .sp1,.sp2 {
             position: absolute;
             padding: 0 10px;
             background: #2da2ff;
@@ -188,6 +174,10 @@
             &:hover {
                 opacity: 1;
             }
+        }
+        .sp2 {
+            display: block;
+            opacity: 1;
         }
         &-list {
             padding: 10px;

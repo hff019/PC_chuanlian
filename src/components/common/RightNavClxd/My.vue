@@ -7,9 +7,11 @@
 </template>
 
 <script>
+
     export default {
         name: "My",
-        props:['landOut']
+        props:['landOut'],
+
     }
 </script>
 
