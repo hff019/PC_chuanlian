@@ -1,23 +1,8 @@
 <template>
     <div id="Product" style="padding-top: 20px">
         <div class="width-container">
-            <div class="item">
-                <ProductClxd></ProductClxd>
-            </div>
-            <div class="item">
-                <ProductClxd></ProductClxd>
-            </div>
-            <div class="item">
-                <ProductClxd></ProductClxd>
-            </div>
-            <div class="item">
-                <ProductClxd></ProductClxd>
-            </div>
-            <div class="item">
-                <ProductClxd></ProductClxd>
-            </div>
-            <div class="item">
-                <ProductClxd></ProductClxd>
+            <div class="item" v-for="(item,index) in product_items">
+                <ProductClxd  :data="item" :factory-id="factoryId"></ProductClxd>
             </div>
         </div>
     </div>
@@ -29,6 +14,24 @@
         name: "Product",
         components:{
             ProductClxd,
+        },
+        data() {
+            return {
+                factoryId:0,
+                product_items:[
+                    {
+                        id:1,
+                        img_cover:'../images/index/banner.png',
+                        good_name:"维生素",
+                        spec:"100盒/件",
+                        tran:"100",
+                        unit:"盒",
+                        big_unit:"件",
+                        price:"5",
+                        sale_num:1,
+                    }
+                ]
+            }
         },
     }
 </script>

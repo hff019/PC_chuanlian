@@ -32,9 +32,6 @@
                     <div class="home-list">
                         <ProductClxd v-for="(item,index) in product_items" :data="item" :factory-id="factoryId"></ProductClxd>
                     </div>
-                    <div class="home-list">
-                        <ProductClxd v-for="(item,index) in product_items" :data="item" :factory-id="factoryId"></ProductClxd>
-                    </div>
                 </div>
             </div>
             <div class="width-container">
@@ -147,7 +144,7 @@
                         id:1,
                         img_cover:'../images/index/banner.png',
                         good_name:"维生素",
-                        spec:"100/盒一件",
+                        spec:"100盒/件",
                         tran:"100",
                         unit:"盒",
                         big_unit:"件",
