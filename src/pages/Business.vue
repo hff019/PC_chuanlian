@@ -1,6 +1,6 @@
 <template>
     <div style="padding-top: 20px;min-height: 600px">
-        <div class="width-container">
+        <div class="width-container"  v-loading="loading">
             <div>
                 <BusinessClxd v-for="(item,index) in business" :data="item" class="item" :entryBusinessShop = "entryBusinessShop"></BusinessClxd>
             </div>
@@ -63,7 +63,7 @@
                     data
                 } = await findNearBySuppliers(params)
                 this.business = data.items
-                console.log(this.business)
+                this.loading=false
             },
             entryBusinessShop(item) {
                 this.$store.commit('SAVE_CURRENT_BUSINESS_SHOP', item.id)

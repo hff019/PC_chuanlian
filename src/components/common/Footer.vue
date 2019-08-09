@@ -36,8 +36,12 @@
                 </div>
                 <div class="foot-nav">
                     <router-link to="">关于我们</router-link>
-                    <router-link to="">关于我们</router-link>
-                    <router-link to="">关于我们</router-link>
+                    <router-link to="">About Us</router-link>
+                    <router-link to="">Investor Relations</router-link>
+                    <router-link to="">媒体报道</router-link>
+                    <router-link to="">隐私条款</router-link>
+                    <router-link to="">创联诚聘</router-link>
+                    <router-link to="">联系我们</router-link>
                 </div>
             </div>
         </div>

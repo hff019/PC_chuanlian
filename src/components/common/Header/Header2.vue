@@ -9,7 +9,7 @@
                 <div class="header-middle-form" style="width: 60%">
                     <ul>
                         <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
-                            <router-link to="/home">首页</router-link>
+                            <router-link to="/business-follow">首页</router-link>
                         </li>
                         <li v-bind:class="{ active:2 == current}"  v-on:click="addClass(2)">
                             <router-link to="/my-info">账户设置</router-link>

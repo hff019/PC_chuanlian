@@ -7,7 +7,7 @@
                     <div class="address-item">
                         <img src="../../images/settings/line2.png" width="100%" class="img1"  v-if="item.is_default ==0">
                         <img src="../../images/settings/line1.png" width="100%" class="img2"  v-if="item.is_default ==1">
-                        <span class="sp1"  @click="chooseAddress(index)" v-if="item.is_default != 1">设为默认地址</span>
+                        <span class="sp1"  @click="chooseAddress(item.id)" v-if="item.is_default != 1">设为默认地址</span>
                         <span class="sp2" v-if="item.is_default == 1">默认地址</span>
                         <ul class="address-item-list">
                             <li>
@@ -52,7 +52,7 @@
     import addressClxd from "./AddAddress"
     import Empty from "@/components/Empty"
     import {mapState, mapMutations} from 'vuex'
-    import {getAddressList, deleteAddress} from "@/api/address.js"
+    import {getAddressList, deleteAddress , updateAddress} from "@/api/address.js"
     export default {
         name: "Address",
         components: {
@@ -101,7 +101,31 @@
                 });
 
             },
-            chooseAddress(i){
+            chooseAddress(id){
+
+                this.$confirm('确定将此地址设为默认收货地址?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                   console.log(id)
+                    let is_default = 1
+                    const params = {
+                        is_default,
+                    }
+                    updateAddress(id,params).then(response => {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消设置'
+                    });
+                });
+                /*
                 this.addressList.forEach((address,index) => {
                     if(i === index ){
                         this.addressList[index].checked = true
@@ -110,6 +134,8 @@
                         this.addressList[index].checked = false
                     }
                 })
+                 */
+
             }
         },
         created() {
