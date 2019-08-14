@@ -82,7 +82,7 @@
                             this.collectList.splice(1)
                             this.$message({
                                 type: 'info',
-                                message: `取消成功`
+                                message: `取消收藏成功`
                             });
                         }else{
                             this.$message({

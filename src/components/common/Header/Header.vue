@@ -21,14 +21,7 @@
 
             <!--导航开始-->
             <div class="header-nav">
-                <div class="top-nav">
-                    <el-menu class="el-menu-demo" mode="horizontal">
-                        <el-submenu index="1">
-                            <template slot="title" class="top-nav-title">产品分类</template>
-                        </el-submenu>
-                    </el-menu>
-                </div>
-                <ul class="big-nav-list">
+                <ul class="big-nav-list" style="width: 100%">
                     <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
                         <router-link to="/home">首页</router-link>
                     </li>
@@ -91,22 +84,6 @@
         padding: 0 !important;
     }
 
-    /*
-    .nav-list {
-        padding: 20px;
-        width: 900px;
-        height: 500px;
-        top:0px;
-        position: absolute;
-        background: #fff;
-        ul {
-            li {
-                list-style: none;
-            }
-        }
-    }
-
-     */
     .shopcar {
         small {
             width: 20px;

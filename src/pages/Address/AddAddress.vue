@@ -11,7 +11,7 @@
                             {{ option.name }}
                         </el-option>
                     </el-select>
-                    <el-select v-model="city" style="width:167px;margin-right: 25px;"  @change="getdistrictData(city)">
+                    <el-select v-model="city" style="width:167px;margin-right: 25px;"  @change="getdistrictData(city)" :disabled="city=='市辖区'">
                         <el-option v-for="option in cityData" :value="option.name">
                             {{ option.name }}
                         </el-option>
@@ -69,7 +69,16 @@
                 this.district = ''
                 AddressArea.forEach(city => {
                     if(city.name == val){
-                        this.cityData = city.children
+                        if(city.children.length == 1){
+                            let cityA = city.children
+                            cityA.forEach( item => {
+                                this.city = "市辖区"
+                                this.districtData = item.children
+                            })
+                        }else {
+                            this.cityData = city.children
+                        }
+
                     }
                 })
             },

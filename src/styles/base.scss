@@ -109,7 +109,7 @@
   li {
     display: inline-block;
     list-style: none;
-    width: 100px;
+    width: 14%;
     text-align: center;
     line-height: 44px;
     text-align: center;
@@ -117,7 +117,6 @@
 
     a {
       color: #333333;
-
       &:hover {
         color: $blue-color;
       }
@@ -125,8 +124,11 @@
 
     &:last-child {
       text-align: right;
+      width: 15.5%;
     }
-
+    &:nth-child(1) {
+      text-align: left;
+    }
     span {
       color: #f1f1f1;
       padding: 0 30px;
