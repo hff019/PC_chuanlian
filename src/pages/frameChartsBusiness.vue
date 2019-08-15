@@ -1,12 +1,12 @@
 <template>
-    <div style="width: 1200px;margin: 0 auto;background: #f1f1f1">
+    <div style="background: #f1f1f1">
         <el-row :gutter="15">
             <el-col :span="6">
                 <div class="info">
                     <img src="../images/default_company_logo.png" width="100" height="100">
                     <p class="name">上海制药有限公司</p>
                     <p class="fans">粉丝量 300</p>
-                    <div class="box">
+                    <div class="Bbox">
                         <div>
                             <p>有效期至</p>
                             <p>2020-10-10</p>
@@ -23,31 +23,31 @@
                     <div class="title">今日数据</div>
                     <el-row>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>今日来访认数</p>
                                 <p>0</p>
                                 <p>较前一日 -100</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>今日下单量（件）</p>
                                 <p>0</p>
                                 <p>较前一日 -100</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>今日出货量</p>
                                 <p>0</p>
                                 <p>较前一日 -100</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box" style="border-right: 0px">
-                                <p>今日收款额</p>
-                                <p>0</p>
-                                <p>较前一日 -100</p>
+                            <div class="Bbox" style="border-right: 0px">
+                                <p>今日收款额(元)</p>
+                                <p>0.00</p>
+                                <p>较前一日 -10.00</p>
                             </div>
                         </el-col>
                     </el-row>
@@ -61,25 +61,25 @@
                     <div class="title">产品数据</div>
                     <el-row>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>审核中</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>出售中</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>已下架</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box" style="border-left: 1px solid #e6e6e6">
+                            <div class="Bbox" style="border-left: 1px solid #e6e6e6">
                                 <p>0.00</p>
                                 <p>应收总金额（元）</p>
                             </div>
@@ -87,28 +87,28 @@
                     </el-row>
                 </div>
                 <div class="product">
-                    <div class="title">订单数据</div>
+                    <div class="title">出售订单数据</div>
                     <el-row>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>审核中</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>出售中</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>已下架</p>
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="box">
+                            <div class="Bbox">
                                 <p>0</p>
                                 <p>已收款</p>
                             </div>
@@ -119,17 +119,6 @@
             <el-col :span="7">
                 <div class="notice">
                     <div class="title">官方通知</div>
-                    <!--
-                    <div class="scroll-wrap">
-                        <ul class="scroll-content" :style="{top}" @mouseenter="Stop()"
-                            @mouseleave="Up()">
-                            <li v-for="(item,index) in prizeList">
-                                <span>{{item.name}}</span>
-                                <small>{{item.time}}</small>
-                            </li>
-                        </ul>
-                    </div>
-                    -->
                     <div class="scroll-wrap">
                         <ul class="scroll-content" ref="con1" :class="{anim:animate==true}">
                             <li v-for="(item,index) in prizeList">
@@ -139,6 +128,71 @@
                         </ul>
                     </div>
                 </div>
+            </el-col>
+        </el-row>
+        <!-- 库存数据开始 -->
+        <el-row  :gutter="15">
+            <el-col :span="12">
+                <div class="product">
+                    <div class="title">
+                        库存数据
+                        <div class="data-right">
+                            <span>地区 &nbsp;</span>
+                            <el-select v-model="province" placeholder="选择省份" @change="selectCity(province)" style="width: 140px">
+                                <el-option :label="item.name" :value="item.name" v-for="(item,index) in areaAddress"></el-option>
+                            </el-select>&nbsp;
+                            <el-select v-model="city" placeholder="选择城市" style="width: 140px">
+                                <el-option :label="item.name" :value="item.name" v-for="(item,index) in cityArray"></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>全国库存量</p>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>{{province}}库存量</p>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>{{city}}库存量</p>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="product">
+                    <div class="title">购买订单数据</div>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>待付款</p>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>待收货</p>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="Bbox">
+                                <p>0</p>
+                                <p>已收货</p>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+
             </el-col>
         </el-row>
         <!-- 销售状况开始 -->
@@ -193,10 +247,13 @@
 </template>
 
 <script>
+    import regionAddress from "@/plugins/json/pca-code.json"
     export default {
         name: "frame_charts",
         data() {
             return {
+                areaAddress: regionAddress,
+                cityArray:[],
                 animate:false,
                 current: 1,
                 pickerOptions: {
@@ -232,7 +289,6 @@
                     {name: '城轨采购网', time: '2019.03.21'},
                     {name: '天津地铁电子采购平台', time: '2019.03.21'},
                     {name: '南昌地铁', time: '2019.03.21'},
-                    {name: '南昌地铁', time: '2019.03.21'},
                     {name: '兰州地铁招标信息', time: '2019.03.21'},
                     {name: '西安公共资源交易中心', time: '2019.03.21'},
                     {name: '城轨采购网', time: '2019.03.21'},
@@ -243,15 +299,20 @@
                     {name: '西安公共资源交易中心', time: '2019.03.21'},
                 ],
                 activeIndex: 0,
-                intnum: 0
-            }
-        },
-        computed: {
-            top() {
-                return -this.activeIndex * 32 + 'px';
+                intnum: 0,
+                province:'北京',
+                city:'市辖区'
             }
         },
         methods: {
+            selectCity(province){
+                this.city = null;
+                this.areaAddress.forEach(item => {
+                    if(item.name === province){
+                        this.cityArray = item.children
+                    }
+                })
+            },
             addClass: function (index) {
                 this.current = index;
             },
@@ -335,7 +396,7 @@
             font-size: 14px;
         }
 
-        .box {
+        .Bbox {
             height: 56px;
             background: #fafafa;
             display: flex;
@@ -367,7 +428,7 @@
         background: #fff;
         height: 280px;
 
-        .box {
+        .Bbox {
             margin-top: 20px;
             padding: 20px 30px;
             border-right: 1px solid #e6e6e6;
@@ -395,7 +456,7 @@
         background: #fff;
         margin-top: 15px;
 
-        .box {
+        .Bbox {
             margin-top: 15px;
             margin-bottom: 15px;
             padding: 15px 0;
