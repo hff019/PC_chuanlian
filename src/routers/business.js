@@ -6,6 +6,7 @@ import BusinessProductDetail from "@/pages/Business/ProductDetail"
 import NotAptitudes from "@/pages/Aptitude/NotAptitudes";
 import Chart from "@/pages/frameCharts";
 import ChartBusiness from "@/pages/frameChartsBusiness";
+import ChartRoot from "@/pages/frameChartsRoot";
 
 export default [
     {
@@ -53,6 +54,13 @@ export default [
     {
         path: "/layout-chart-business",
         component: ChartBusiness,
+        meta: {
+            title: "表格",
+        },
+    },
+    {
+        path: "/layout-chart-root",
+        component: ChartRoot,
         meta: {
             title: "表格",
         },
