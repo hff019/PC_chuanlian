@@ -5,13 +5,6 @@
         <div class="width-container" style="padding-top: 20px">
             <GoodList style="border: 1px solid #f1f1f1" v-for="(item,index) in items" :data="item" :factory-id="factoryId"/>
         </div>
-        <div class="width-container" style="text-align: center">
-            <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="100">
-            </el-pagination>
-        </div>
         </div>
         <Empty v-else/>
         <!--尾部开始-->

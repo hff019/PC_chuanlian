@@ -19,51 +19,50 @@
                 </div>
             </div>
         </div>
-        <div class="company-box">
-            <div class="width-container">
-                <div class="company-info">
+        <el-carousel height="450px">
+            <el-carousel-item v-for="(item,index) in items" :key="index">
+                <img :src="item.imgUrl">
+            </el-carousel-item>
+        </el-carousel>
+        <div class="width-container" style="position: relative">
+            <div class="company-box2">
+                <div class="company-box2-top">
                     <img src="../../../images/index/logo.png" width="90" height="90" v-if="CompanyInfo.logo == null">
                     <img :src="CompanyInfo.logo" width="90" height="90" v-else>
-                    <div class="right">
-                        <h1 class="title">{{CompanyInfo.name}}<span  @click="FollowFactory(CompanyInfo.supplier_id)">{{follow_info}}</span></h1>
-                        <div class="company-info-box">
-                            <ul>
-                                <li v-if="CompanyInfo.address!=null">{{CompanyInfo.address}}</li>
-                                <li>调配时间35天</li>
-                                <li>已售{{CompanyInfo.sale_num}}件</li>
-                            </ul>
-                            <div>
-                                <el-popover
-                                        placement="bottom-start"
-                                        width="400"
-                                        trigger="hover"
-                                >
-                                    <div>
-                                        <ul class="coupon-list">
-                                            <li>
-                                                <div class="coupon-title">减</div>
-                                                <div class="coupon-detail">
-                                                    <p>满1000减100</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="coupon-title">减</div>
-                                                <div class="coupon-detail">
-                                                    <p>满1000减100</p>
-                                                </div>
-                                            </li>
-                                        </ul>
+                    <p class="title">{{CompanyInfo.name}}</p>
+                </div>
+                <ul>
+                    <li>生产地址：{{CompanyInfo.address || "北京"}}</li>
+                    <li>已售数量：{{CompanyInfo.sale_num || 0}}</li>
+                    <li>生产周期：{{'35天'}}</li>
+                </ul>
+                <div>
+                    <el-popover
+                            placement="left-start"
+                            width="400"
+                            trigger="hover"
+                    >
+                        <div>
+                            <ul class="coupon-list">
+                                <li>
+                                    <div class="coupon-title">减</div>
+                                    <div class="coupon-detail">
+                                        <p>满1000减100</p>
                                     </div>
-                                    <el-button slot="reference" style="border: 0px;background: none;color: #fff;padding-top: 5px">
-                                        <span>优惠活动 </span>
-                                        <svg class="icon" style="width: 13px">
-                                            <use xlink:href="#icon-activity-down"></use>
-                                        </svg>
-                                    </el-button>
-                                </el-popover>
-                            </div>
+                                </li>
+                                <li>
+                                    <div class="coupon-title">减</div>
+                                    <div class="coupon-detail">
+                                        <p>满1000减100</p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
+                        <el-button slot="reference" style="border: 0px;background: none;color: #fff;padding-top: 5px">
+                            <span class="btn1" style="color: #333">活动 </span>
+                        </el-button>
+                    </el-popover>
+                    <span  @click="FollowFactory(CompanyInfo.supplier_id)" class="btn1" :class="`${follow_info=='已关注' ? 'active' : ''}`">{{follow_info}}</span>
                 </div>
             </div>
         </div>
@@ -77,6 +76,7 @@
     import {mapState} from 'vuex'
     import {supplierDetails} from "@/api/supplier"
     import {getFollowList, deleteFollow, SaveFollow} from "@/api/follow.js"
+    import banner from "@/images/banner/banner1.png"
     export default {
         name: "HeaderCompany",
         components: {
@@ -88,6 +88,11 @@
                 CompanyInfo:[],
                 follow_status: 0,
                 follow_info: '关注',
+                items:[
+                    {
+                        imgUrl: banner
+                    },
+                ]
             }
 
         },
@@ -101,7 +106,9 @@
                 const {
                     data
                 } = await supplierDetails(this.factoryId)
+                console.log(data)
                 this.CompanyInfo = data
+
                 //店铺是否关注信息
                 const follow = await getFollowList()
                 this.follow_list = follow.data
@@ -147,48 +154,56 @@
 </script>
 
 <style lang="scss" scoped>
-    .company-box {
-        background: url("../../../images/index/small_top.png") no-repeat center;
-        width: 100%;
-        height: 150px;
-        .company-info {
-            padding-top: 25px;
+    .company-box2 {
+        float: right;
+        width: 280px;
+        height: 410px;
+        margin-top: -430px;
+        z-index: 99;
+        position: relative;
+        background: #fff;
+        &-top {
+            background: url("../../../images/bg1.jpg") no-repeat center;
             display: flex;
+            font-size: 18px;
             color: #fff;
+            padding: 24px;
             img {
-                border-radius: 4px;
+                border-radius: 3px;
             }
-            .right {
-                padding-left: 15px;
-                .title {
-                    padding-top: 6px;
-                    font-size: 24px;
-                    span {
-                        font-size: 12px;
-                        background: #ff3b30;
-                        padding: 4px 8px;
-                        border-radius: 3px;
-                        margin-left: 8px;
-                        font-weight: 100;
-                        cursor: pointer;
-                    }
-                }
-                .company-info-box {
-                    margin-top: 20px;
-                    display: flex;
-                    ul {
-                        li {
-                            display: inline-block;
-                            border: 1px solid #fff;
-                            border-radius: 3px;
-                            padding: 4px 8px;
-                            margin-right: 10px;
-                        }
-                    }
-                }
+            p {
+                padding-left: 14px;
+                padding-top: 10px;
+                line-height: 1.8;
+                font-weight: bold;
             }
         }
+        ul {
+            border-bottom: 1px dashed #e6e6e6;
+            line-height: 2.5;
+            font-size: 16px;
+            padding: 20px 34px;
+            margin-bottom: 20px;
+        }
+        .btn1 {
+            width: 106px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background: #e6e6e6;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .active {
+            background: #ff3b30;
+            color: #fff;
+            border-color:#ff3b30 ;
+        }
     }
+
     .coupon-list {
         li {
             display: flex;

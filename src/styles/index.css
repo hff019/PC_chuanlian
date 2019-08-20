@@ -87,12 +87,7 @@
   width: 1190px;
   margin: 0 auto;
   position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  justify-content: space-between; }
+  height: 44px; }
   @media screen and (max-width: 1180px) {
     .header-nav {
       width: 920px; } }

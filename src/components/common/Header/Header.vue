@@ -3,8 +3,8 @@
         <HeaderTop></HeaderTop>
         <div style="background: #fff;border-bottom:2px solid #2da2ff ">
             <div class="header-middle">
-                <div>
-                    <router-link to="/home"><img src="../../../images/logo.png"></router-link>
+                <div style="width: 320px">
+                    <router-link to="/home" style="position: absolute"><img src="../../../images/logo2.png"></router-link>
                 </div>
                 <div class="header-middle-form">
                     <form>
@@ -21,7 +21,7 @@
 
             <!--导航开始-->
             <div class="header-nav">
-                <ul class="big-nav-list" style="width: 100%">
+                <ul class="big-nav-list" style="width: 63.5%;float: right">
                     <li v-bind:class="{ active:1 == current}"  v-on:click="addClass(1)">
                         <router-link to="/home">首页</router-link>
                     </li>
@@ -36,10 +36,10 @@
                     </li>
                     <li><span>|</span></li>
                     <li v-bind:class="{ active:5 == current}"  v-on:click="addClass(5)">
-                        <router-link to="/factory">生产厂家</router-link>
+                        <router-link to="/factory">云工厂</router-link>
                     </li>
                     <li v-bind:class="{ active:6 == current}"  v-on:click="addClass(6)">
-                        <router-link to="/business">商业公司</router-link>
+                        <router-link to="/business">全球仓</router-link>
                     </li>
                 </ul>
             </div>
