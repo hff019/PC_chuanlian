@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <el-carousel height="450px">
+        <el-carousel height="510px">
             <el-carousel-item v-for="(item,index) in items" :key="index">
                 <img :src="item.imgUrl">
             </el-carousel-item>
@@ -158,7 +158,7 @@
         float: right;
         width: 280px;
         height: 410px;
-        margin-top: -430px;
+        margin-top: -455px;
         z-index: 99;
         position: relative;
         background: #fff;
