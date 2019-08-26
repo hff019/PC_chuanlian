@@ -4,7 +4,7 @@
             <span>购物车</span>
             <span @click="closedCarBox()">关闭</span>
         </div>
-        <div class="shop-container" v-if="data.length>0">
+        <div class="shop-container" v-if="data.shops.length>0">
             <CartsShoplist :data="data"/>
         </div>
         <Empty v-else />

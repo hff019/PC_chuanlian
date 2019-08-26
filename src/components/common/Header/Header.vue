@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <router-link to="/my-shop">
-                        <span class="shopcar">我的购物车<small>1</small></span>
+                        <span class="shopcar">我的购物车<small>{{totle_num}}</small></span>
                     </router-link>
                 </div>
             </div>
@@ -49,6 +49,9 @@
 
 <script>
     import HeaderTop from "./HeaderTop"
+    import { mapState,mapMutations} from 'vuex'
+    import { supplierFactoryEntities } from '@/api/supplier'
+
 
     export default {
         name: "Header",
@@ -57,12 +60,57 @@
         },
         data(){
           return {
-              current:1
+              current:1,
+              totle_num:0,
+              data:{
+                  shops:[],
+              },
           }
+        },
+        computed:{
+            ...mapState({
+                cartList: state =>state.shop.CART_LIST
+            }),
+        },
+        mounted(){
+            this.initData()
         },
         methods:{
             addClass:function(index){
                 this.current=index;
+            },
+            async initData(){
+                let ids = []
+                let idMapQ = {}
+                let cartData =  this.cartList
+                if(cartData){
+                    if(this.shopId){
+                        Object.values(cartData).forEach(item => {
+                            ids.push(item.id)
+                            idMapQ[item.id] = item.num
+                        })
+                    }else{
+                        Object.values(cartData).forEach(item => {
+                            Object.values(item).forEach(_item =>{
+                                ids.push(_item.id)
+                                idMapQ[_item.id] = _item.num
+                            })
+
+                        })
+                    }
+                }
+                if(ids.length){
+                    const { data } = await supplierFactoryEntities(ids.join(','))
+                    this.data.shops = this._handleData(data,idMapQ)
+                }
+            },
+            _handleData(data,map){
+                let shops = {}
+                data.forEach((item,index) =>{
+                    item.num = map[item.id]
+                    this.totle_num+=item.num
+                })
+                return Object.values(shops)
             },
         }
 

@@ -114,7 +114,7 @@
             border: 1px solid #f1f1f1;
         }
         .title-p {
-            width: 160px;
+            width: 100px;
             color: #333;
             font-size: 12px;
             line-height: 20px;
@@ -122,9 +122,12 @@
             overflow: hidden;
             padding-left: 5px;
             padding-right: 5px;
+            text-align: left;
         }
         .del {
             color: #2da2ff;
+            width: 90px;
+            text-align: right;
         }
     }
     .total {

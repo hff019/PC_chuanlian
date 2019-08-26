@@ -7,7 +7,7 @@
         </div>
         <div class="td2">
             <p class="title">{{data.good_name}}</p>
-            <p><b style="color: #ff3b30">{{data.sale_price}}/{{data.big_unit}}</b><span> x{{data.num}}</span></p>
+            <p><b style="color: #ff3b30"> {{data.sale_price}}/{{data.big_unit}}</b><span style="float: right"> x{{data.num}}</span></p>
         </div>
     </li>
 </template>
@@ -52,7 +52,7 @@
         }
 
         .td2 {
-            width: 55%;
+            width: 75%;
             float: left;
             text-align: left;
             padding-left: 10px;

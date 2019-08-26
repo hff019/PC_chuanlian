@@ -11,14 +11,14 @@
                     </router-link>
                     <My v-show="my_frame" :landOut="landOut"></My>
                 </li>
-                <li>
+                <li style="margin-bottom: 5px">
                     <div @mouseenter="shop_frame = !shop_frame" @mouseleave="shop_frame = !shop_frame">
                         <router-link to="/my-shop" class="shopcar">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-pc-home-shoppingCar"></use>
                             </svg>
                             <span>购物车</span>
-                            <small>1</small>
+                            <small>{{totle_num}}</small>
                         </router-link>
                         <div v-show="shop_frame">
                             <ShopFollow :closedCarBox="closedCarBox"></ShopFollow>
@@ -68,6 +68,9 @@
     import ProductFollow from "./RightNavClxd/productFollow"
     import ShopFollow from "./RightNavClxd/ShopCar"
     import My from "./RightNavClxd/My"
+    import { mapState,mapMutations} from 'vuex'
+    import { supplierFactoryEntities } from '@/api/supplier'
+
     export default {
         name: "RightLayout",
         components:{
@@ -85,8 +88,17 @@
               product_frame:false,
               shop_frame:false,
               my_frame:false,
-              dialogVisible: false
+              dialogVisible: false,
+              totle_num:0,
+              data:{
+                  shops:[],
+              },
           }
+        },
+        computed:{
+            ...mapState({
+                cartList: state =>state.shop.CART_LIST
+            }),
         },
         methods: {
             closedBusinessBox() {
@@ -106,6 +118,42 @@
                 console.log("确定退出")
                 this.dialogVisible = false
             },
+            async initData(){
+                let ids = []
+                let idMapQ = {}
+                let cartData =  this.cartList
+                if(cartData){
+                    if(this.shopId){
+                        Object.values(cartData).forEach(item => {
+                            ids.push(item.id)
+                            idMapQ[item.id] = item.num
+                        })
+                    }else{
+                        Object.values(cartData).forEach(item => {
+                            Object.values(item).forEach(_item =>{
+                                ids.push(_item.id)
+                                idMapQ[_item.id] = _item.num
+                            })
+
+                        })
+                    }
+                }
+                if(ids.length){
+                    const { data } = await supplierFactoryEntities(ids.join(','))
+                    this.data.shops = this._handleData(data,idMapQ)
+                }
+            },
+            _handleData(data,map){
+                let shops = {}
+                data.forEach((item,index) =>{
+                    item.num = map[item.id]
+                    this.totle_num+=item.num
+                })
+                return Object.values(shops)
+            },
+        },
+        mounted(){
+            this.initData()
         },
         }
 </script>
@@ -124,7 +172,7 @@
         li {
             list-style: none;
             cursor: pointer;
-            padding: 8px 0;
+            padding: 10px 0;
             svg {
                 width: 20px;
                 height: 20px;

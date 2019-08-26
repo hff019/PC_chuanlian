@@ -8,8 +8,9 @@
                 </div>
                 <div class="header-middle-form">
                     <form>
-                        <input type="search" placeholder="请输入要搜索的关键字">
-                        <button type="submit">搜索</button>
+                        <input type="search" placeholder="请输入要搜索的关键字" style="width: 360px">
+                        <button type="submit" style="width: 80px">搜全站</button>
+                        <button class="btn-factory">搜本厂</button>
                     </form>
                 </div>
                 <div>
@@ -154,6 +155,13 @@
 </script>
 
 <style lang="scss" scoped>
+    .btn-factory {
+        position: absolute;
+        width: 75px;
+        height: 34px;
+        margin-left: 5px;
+        background: #333;
+    }
     .company-box2 {
         float: right;
         width: 280px;
@@ -244,5 +252,8 @@
             position: relative;
             left: -2px;
         }
+    }
+    .btn-factory {
+        position: absolute;
     }
 </style>

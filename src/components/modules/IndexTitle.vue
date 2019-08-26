@@ -1,10 +1,13 @@
 <template>
     <div>
         <div class="title-box width-container">
-            <span>{{title}}</span>
-            <router-link :to="url" target="_blank">
-                查看全部
-                <svg class="icon">
+            <span class="left">{{title}}</span>
+            <router-link :to="url" target="_blank" class="right">
+                <span>查看全部</span>
+                <svg class="icon icon1">
+                    <use xlink:href="#icon-pc-home-seeAll"></use>
+                </svg>
+                <svg class="icon icon2">
                     <use xlink:href="#icon-go-next"></use>
                 </svg>
             </router-link>
@@ -38,14 +41,30 @@
     .title-box {
         display: flex;
         justify-content: space-between;
-        padding: 30px 0;
-        padding-bottom: 18px;
-        span {
+        margin: 30px auto;
+        margin-bottom: 18px;
+        .left {
             font-size: 22px;
+            line-height: 20px;
         }
-        a {
+        .right {
             font-size: 16px;
             color: #333;
+            transition: .3s linear;
+            .icon2 {
+                display: none;
+            }
+            &:hover {
+                .icon1 {
+                    display: none;
+                }
+                .icon2 {
+                    display: inline-block;
+                }
+            }
+            span {
+                padding-right: 3px;
+            }
             &:hover {
                 color: #2da2ff;
             }
