@@ -4,7 +4,7 @@
         <div style="background: #fff;border-bottom:2px solid #2da2ff ">
             <div class="header-middle">
                 <div style="width: 320px">
-                    <router-link to="/home" style="position: absolute"><img src="../../../images/logo2.png"></router-link>
+                    <router-link to="/home" style="position: absolute"><img src="../../../images/logo2.png" class="header-img"></router-link>
                 </div>
                 <div class="header-middle-form">
                     <form>

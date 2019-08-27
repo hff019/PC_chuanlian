@@ -6,7 +6,7 @@
                 <span>商品收藏</span>
             </div>
             <div v-if="collectList.length>0">
-                <div class="follow-item" v-for="(enItem,enIndex) in collectList" >
+                <div class="follow-item" v-for="(enItem,enIndex) in collectList">
                     <div class="follow-item-box1">
                         <router-link :to="`/factoty-shop/${enItem.id}`">进入厂家</router-link>
                         <span @click="deleteGoodsFn(enIndex,enItem)">取消收藏</span>
@@ -16,11 +16,16 @@
                         <p class="p1">{{enItem.entity.good_name}}</p>
                         <p class="p2">{{enItem.entity.price}}10元/{{enItem.entity.unit}}</p>
                     </router-link>
-                    <div class="follow-item-box3">
-                        <svg class="icon">
-                            <use xlink:href="#icon-myEnshrine-carShopping"></use>
-                        </svg>
-                        <span>加入购物车</span>
+                    <div class="follow-item-box3"  v-if="canShow">
+                        <div  @click="addToMiniCart($event,enItem.entity)" v-if="enItem.num<1">
+                            <svg class="icon">
+                                <use xlink:href="#icon-myEnshrine-carShopping"></use>
+                            </svg>
+                            <span>加入购物车</span>
+                        </div>
+                        <router-link to="/my-shop"  v-else>
+                            <span>已加入购物车，去购买</span>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -33,6 +38,8 @@
     import TopClxsd from "@/components/common/MyTop"
     import {getCollectionList, deleteCollection} from "@/api/follow.js"
     import Empty from "@/components/Empty"
+    import { mapState,mapMutations} from 'vuex'
+
     export default {
         name: "ProductFollow",
         components:{
@@ -45,7 +52,25 @@
                 currentPage:1,
                 pagesize:20,
                 collectList:[],
+                factoryId:0
             }
+        },
+        computed:{
+            ...mapState({
+                canShow:state => state.CURRENTUSER.shop_supplier,
+                cartList: state =>state.shop.CART_LIST
+            }),
+            //当前商店购物信息
+            shopCart(){
+                return {...this.cartList[this.factoryId]}
+            },
+            cartNum(){
+                let num = 0;
+                Object.values(this.shopCart).forEach((item,index) =>{
+                    num += item.num;
+                })
+                return num
+            },
         },
         created() {
             var params = {
@@ -53,14 +78,51 @@
                 type: 'follow',
                 limit: this.pagesize
             }
-            this.initData(params)
+            this.initData(params);
         },
         methods:{
+            ...mapMutations([
+                'ADD_CART','REMOVE_CART',
+            ]),
+            canOption(){
+                if(!this.canShow){
+                    this.$Message.error('当前用户还未审核通过');
+                    return false;
+                }
+                return true
+            },
+
+            addToMiniCart(event,enItem){
+                console.log(enItem)
+                const item = {
+                    shopId:enItem.supplier_id,
+                    itemId:enItem.id,
+                    sale_price:enItem.tran*enItem.price,
+                }
+                if(this.canOption()){
+                    this.ADD_CART(item)
+                    item.num++
+                }
+
+            },
             async initData(params) {
                 getCollectionList(params)
                 .then(({data = []}) => {
                     this.loading = false
                     this.collectList = data
+                    this.collectList.forEach((enItem,enIndex) => {
+                        console.log(enItem.entity_id)
+                        enItem.num = 0
+                        Object.values(this.cartList).forEach((item,index) =>{
+                            Object.values(item).forEach((itemCar,index) => {
+                                console.log(itemCar.id)
+                                if(itemCar.id == enItem.entity_id){
+                                    enItem.num = itemCar.num
+                                }
+                            })
+
+                        })
+                    })
                 })
             },
             current_change(currentPage){  //改变当前页
@@ -113,7 +175,6 @@
     }
     .follow-item {
         width: 228px;
-        height: 335px;
         border:1px solid #e6e6e6;
         position: relative;
         overflow: hidden;
@@ -160,6 +221,8 @@
         }
         &-box2 {
             text-align: center;
+            padding-bottom: 10px;
+            display: block;
             img {
                 width: 97%;
                 height: 220px;
@@ -170,6 +233,8 @@
                 font-size: 14px;
                 margin-top: 2px;
                 color: #333;
+                overflow: hidden;
+                white-space: nowrap;
             }
             .p2 {
                 font-size: 12px;
@@ -178,8 +243,7 @@
             }
         }
         &-box3 {
-            position: absolute;
-            bottom: 0px;
+            margin-top: 10px;
             width: 100%;
             height: 34px;
             background: rgb(245,245,245);
@@ -189,12 +253,18 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            a {
+                color: #333;
+            }
             &:hover {
                 background: #2da2ff;
                 color: #fff;
                 font-weight: bold;
                 svg {
                     display: none;
+                }
+                a {
+                    color: #fff;
                 }
             }
             svg {
@@ -208,12 +278,11 @@
     @media screen and (max-width:1180px) {
         .follow-item {
             width: 177px;
-            height: 280px;
             margin-left: 5px;
             margin-right: 5px;
             margin-bottom: 10px;
             img {
-                height: 170px;
+                height: 160px;
             }
         }
     }

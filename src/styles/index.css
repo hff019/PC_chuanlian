@@ -205,6 +205,14 @@
       margin-left: 14px; }
 
 @media screen and (max-width: 1180px) {
+  .header-img {
+    width: 280px; }
+
+  .header-middle-form {
+    width: 405px; }
+    .header-middle-form input {
+      width: 300px; }
+
   .big-nav-list li {
     width: 80px; }
     .big-nav-list li span {

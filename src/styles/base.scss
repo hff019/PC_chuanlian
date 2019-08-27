@@ -235,6 +235,17 @@
 
 //媒体查询
 @media screen and (max-width: 1180px) {
+  .header-img {
+    width: 280px;
+  }
+  .header-middle {
+    &-form {
+      width: 405px;
+      input {
+        width: 300px;
+      }
+    }
+  }
   .big-nav-list {
     li {
       width: 80px;

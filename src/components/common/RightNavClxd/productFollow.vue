@@ -107,12 +107,15 @@
         padding: 7px;
     }
     .product-list {
-        display: inline-block;
+        display: block;
         border:1px solid #f1f1f1;
         width: 115px;
+        padding: 5px;
         text-align: center;
         margin-right: 6px;
         height: 170px;
+        float: left;
+        margin-top: 10px;
         &:nth-child(2n) {
             margin-right: 0px;
         }
@@ -125,6 +128,8 @@
             line-height: 20px;
             white-space: nowrap;
             overflow: hidden;
+            color: #333;
+            text-overflow: ellipsis;
         }
         .price {
             color: #ff0036;

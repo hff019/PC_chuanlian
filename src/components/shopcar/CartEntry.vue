@@ -7,7 +7,7 @@
                 </svg>
             </div>
             <router-link to="" class="td1-a">
-                <img src="../../images/index/img3.jpg">
+                <img :src="data.img_cover">
                 <p>{{ data.good_name}}</p>
             </router-link>
         </div>

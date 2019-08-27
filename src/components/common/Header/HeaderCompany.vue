@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <router-link to="/my-shop">
-                        <span class="shopcar">我的购物车<small>1</small></span>
+                        <span class="shopcar">我的购物车<small>{{totle_num}}</small></span>
                     </router-link>
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
 <script>
     import HeaderTop from "./HeaderTop"
-    import {mapState} from 'vuex'
+    import { mapState,mapMutations} from 'vuex'
     import {supplierDetails} from "@/api/supplier"
     import {getFollowList, deleteFollow, SaveFollow} from "@/api/follow.js"
     import banner from "@/images/banner/banner1.png"
@@ -89,6 +89,7 @@
                 CompanyInfo:[],
                 follow_status: 0,
                 follow_info: '关注',
+                totle_num:0,
                 items:[
                     {
                         imgUrl: banner
@@ -97,9 +98,15 @@
             }
 
         },
+        computed:{
+            ...mapState({
+                cartList: state =>state.shop.BUSINESS_CART_LIST
+            }),
+        },
         created() {
             this.factoryId = parseInt(this.$route.params.id);
             this.initData()
+            this.initDataCar()
         },
         methods:{
             async initData() {
@@ -107,7 +114,6 @@
                 const {
                     data
                 } = await supplierDetails(this.factoryId)
-                console.log(data)
                 this.CompanyInfo = data
 
                 //店铺是否关注信息
@@ -123,6 +129,25 @@
                         return
                     }
                 })
+            },
+            async initDataCar(){
+                let ids = []
+                let idMapQ = {}
+                let cartData =  this.cartList
+                        Object.values(this.cartList).forEach(item => {
+                            console.log(item)
+                            Object.values(item).forEach(_item =>{
+                                comsole.log(item.num)
+                            })
+                        })
+            },
+            _handleData(data,map){
+                let shops = {}
+                data.forEach((item,index) =>{
+                    item.num = map[item.id]
+                    this.totle_num+=item.num
+                })
+                return Object.values(shops)
             },
             FollowFactory(id) {
                 const params = {
