@@ -29,7 +29,7 @@
 
 <style lang="scss" scoped>
     .factory-cart-list {
-        width: 226px;
+        width: 225px;
         height: 300px;
         background: #fff;
         display: inline-block;

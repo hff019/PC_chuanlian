@@ -23,7 +23,7 @@
         <!--产品-->
         <div class="gray-bg">
             <!--产品开始-->
-            <div v-for="(item,index) in hot_product" key='index' class="product-list-box">
+            <div v-for="(item,index) in hot_product" :key="index" class="product-list-box">
                 <TitleCell :title="item.title" :url="'/product'" class="add-title width-container"></TitleCell>
                 <div class="product width-container">
                     <div class="add" v-if="item.add.length>0">
@@ -31,12 +31,12 @@
                     </div>
                     <div class="product-list"  v-if="item.add.length>0">
                         <div class="home-list">
-                            <ProductClxd v-for="(item,index) in item.suppliers" :data="item" :factory-id="factoryId"></ProductClxd>
+                            <ProductClxd v-for="(item,index) in item.suppliers.slice(0,7)" :data="item" :factory-id="factoryId"></ProductClxd>
                         </div>
                     </div>
-                    <div class="product-list"  v-if="item.add.length==0">
+                    <div class="product-list"  v-if="item.add.length==0" style="width: 100%">
                         <div class="home-list">
-                            <ProductClxd v-for="(item,index) in item.suppliers.slice(0,7)" :data="item" :factory-id="factoryId"></ProductClxd>
+                            <ProductClxd v-for="(item,index) in item.suppliers" :data="item" :factory-id="factoryId"></ProductClxd>
                         </div>
                     </div>
                 </div>
@@ -179,6 +179,26 @@
                             require('../images/index/add1.png'),
                         ],
                         suppliers:[
+                            {},
+                            {
+                                id:1,
+                                img_cover:require('../images/index/img3.jpg'),
+                                good_name:"维生素",
+                                spec:"100盒/件",
+                                tran:"100",
+                                unit:"盒",
+                                big_unit:"件",
+                                price:"5",
+                                sale_num:1,
+                            },
+                        ]
+                    },
+                    {
+                        title:'商业热卖产品',
+                        url:'',
+                        add:[],
+                        suppliers:[
+                            {},{},{},{},{},{},{},{},{},
                             {
                                 id:1,
                                 img_cover:require('../images/index/img3.jpg'),
@@ -258,7 +278,6 @@
 
         .product-list {
             width: 950px;
-
         }
     }
 
