@@ -7,6 +7,7 @@ import NotAptitudes from "@/pages/Aptitude/NotAptitudes";
 import Chart from "@/pages/frameCharts";
 import ChartBusiness from "@/pages/frameChartsBusiness";
 import ChartRoot from "@/pages/frameChartsRoot";
+import StaffList from "@/pages/Staff/StaffList";
 
 export default [
     {
@@ -63,6 +64,13 @@ export default [
         component: ChartRoot,
         meta: {
             title: "表格",
+        },
+    },
+    {
+        path: "/staff-list",
+        component: StaffList,
+        meta: {
+            title: "员工",
         },
     },
 ]

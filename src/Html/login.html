@@ -11,8 +11,8 @@
     <img src="images/public/sentence.png"/>
 </div>
 <div class="login-bg">
-    <div class="width">
-        <div class="login">
+    <div class="width" style="display: -webkit-flex;display: flex;align-items: center;justify-content: flex-end;height: 100%;">
+        <div class="login" style="margin-top: 0px;">
             <div class="login-top">
                 <div class="float-left">
                     <p class="login-title">密码登陆</p>
@@ -44,7 +44,7 @@
                     <div class="remeber-pw">
                         <input type="checkbox"/><label>记住我</label>
                     </div>
-                    <div class="pw-submit" onclick="userLogin();">登陆</div>
+                    <div class="pw-submit" onclick="userLogin();" style="text-align: center;line-height: 52px;">登陆</div>
                 </form>
                 <div class="regiter">
                     <a href="#" title="忘记密码">忘记密码</a>
@@ -73,6 +73,16 @@
 </footer>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script>
+	$(function(){
+		var height = window.screen.height-460
+		$(".login-bg").css("height",height+'px')
+		if(window.screen.height<980) {
+			$("footer").css("marginTop","30px")
+		}
+		
+	})
+	
+	
     var userTelValue, userPasswordValue, userCodeValue;
 
     function fnSetUserTel() {
