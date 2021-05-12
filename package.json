@@ -32,7 +32,7 @@
     "sass": "^1.15.2",
     "sass-loader": "^7.1.0",
     "shebang-regex": "^2.0.0",
-    "swiper": "^4.5.0",
+    "swiper": "^6.5.1",
     "vue-template-compiler": "^2.6.10"
   },
   "prefer-stable": true
